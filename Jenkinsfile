@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Test library') {
       steps {
-        sh "./gradlew test"
+        sh "./gradlew test --info"
       }
     }
 
