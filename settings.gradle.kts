@@ -1,5 +1,7 @@
 rootProject.name = "events"
 
+enableFeaturePreview("STABLE_PUBLISHING")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()

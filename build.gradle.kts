@@ -2,6 +2,7 @@ plugins {
     id("java-library")
     id("com.diffplug.gradle.spotless") version "3.13.0"
     id("com.commercehub.gradle.plugin.avro") version "0.14.2"
+    id("maven-publish")
 }
 
 apply {
@@ -21,6 +22,20 @@ val avroVersion = "1.8.2"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
+}
+
+publishing {
+    publications {
+        create("default", MavenPublication::class.java) {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("https://repo.adeo.no/repository/maven-releases")
+        }
+    }
 }
 
 spotless {
