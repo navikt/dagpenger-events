@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build library') {
       steps {
-        sh "./gradlew clean jar --debug"
+        sh "./gradlew clean jar --stacktrace"
       }
     }
 

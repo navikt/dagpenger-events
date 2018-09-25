@@ -17,7 +17,6 @@ repositories {
 group = "no.nav.dagpenger"
 version = "0.0.1"
 
-val kotlinLoggingVersion = "1.4.9"
 val avroVersion = "1.8.2"
 
 dependencies {
