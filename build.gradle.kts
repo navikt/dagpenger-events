@@ -1,9 +1,7 @@
 plugins {
-    "java-library"
-    kotlin("jvm") version "1.2.51"
+    id("java-library")
     id("com.diffplug.gradle.spotless") version "3.13.0"
-    id("com.palantir.docker") version "0.20.1"
-    id("com.palantir.git-version") version "0.11.0"
+    id("com.commercehub.gradle.plugin.avro") version "0.14.2"
 }
 
 apply {
@@ -15,18 +13,14 @@ repositories {
     maven(url = "http://packages.confluent.io/maven/")
 }
 
+group = "no.nav.dagpenger"
 version = "0.0.1"
 
 val kotlinLoggingVersion = "1.4.9"
+val avroVersion = "1.8.2"
 
 dependencies {
-    implementation(kotlin("stdlib"))
-
-    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-
-    testImplementation(kotlin("test"))
-    testImplementation(kotlin("test-junit"))
-    testImplementation("junit:junit:4.12")
+    api("org.apache.avro:avro:$avroVersion")
 }
 
 spotless {
