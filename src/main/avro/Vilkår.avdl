@@ -1,6 +1,6 @@
 @namespace("no.nav.dagpenger.events.avro")
 protocol Dagpenger {
-  import idl "vilkår/ReellArbeidssøker.avdl";
+  import idl "Vilkår/ReellArbeidssøker.avdl";
 
   enum Utfall {
     JA,
