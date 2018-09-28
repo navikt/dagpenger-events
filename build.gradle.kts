@@ -32,7 +32,7 @@ publishing {
 
     repositories {
         maven {
-            url = uri("https://repo.adeo.no/repository/maven-central")
+            url = uri("https://repo.adeo.no/repository/maven-releases/")
         }
     }
 }
