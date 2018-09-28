@@ -5,9 +5,17 @@ plugins {
     id("maven-publish")
 }
 
+buildscript {
+    dependencies {
+        classpath("com.cinnober.gradle:semver-git:2.2.0")
+    }
+}
+
 apply {
     plugin("com.diffplug.gradle.spotless")
+    plugin("com.cinnober.gradle.semver-git")
 }
+
 
 repositories {
     jcenter()
@@ -15,7 +23,6 @@ repositories {
 }
 
 group = "no.nav.dagpenger"
-version = "0.0.1"
 
 val avroVersion = "1.8.2"
 
