@@ -5,6 +5,7 @@ pipeline {
     stage('Build library') {
       steps {
         sh "./gradlew jar"
+        sh "git status"
       }
     }
 
