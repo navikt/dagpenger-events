@@ -1,9 +1,10 @@
 pipeline {
-  agent {
-    docker {
-      image 'gradle:jdk10-slim'
-    }
-  }
+  //agent {
+  //  docker {
+  //    image 'gradle:jdk10-slim'
+  //  }
+  //}
+  agent any
 
   //triggers {
   //  pollSCM('H * * * 1-5')
