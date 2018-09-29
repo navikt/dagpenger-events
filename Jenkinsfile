@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  #triggers {
+  #  pollSCM('H * * * 1-5')
+  #}
+
   stages {
     stage('Install dependencies') {
       steps {
@@ -14,16 +18,14 @@ pipeline {
       }
     }
 
-    stage('Package') {
-      steps {
-        sh "./gradlew check"
-        sh "git status"
+    stage("Publish") {
+      when {
+        branch "master"
       }
-    }
 
-    stage("Publish service contract") {
       steps {
         withCredentials([usernamePassword(credentialsId: 'repo.adeo.no', usernameVariable: 'REPO_CREDENTIAL_USR', passwordVariable: 'REPO_CREDENTIAL_PSW')]) {
+          sh "git status"
           sh "./gradlew -PmavenUser=${env.REPO_CREDENTIAL_USR} -PmavenPassword=${env.REPO_CREDENTIAL_PSW} publish"
         }
       }
