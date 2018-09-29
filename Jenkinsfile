@@ -34,8 +34,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'repo.adeo.no', usernameVariable: 'REPO_CREDENTIAL_USR', passwordVariable: 'REPO_CREDENTIAL_PSW')]) {
           sh "./gradlew showVersion"
           sh "git tag -l"
-          sh "curl -v https://repo.adeo.no/repository/maven-snapshots/no/nav/dagpenger/events/0.2.0-SNAPSHOT/maven-metadata.xml > /dev/null"
-          sh "./gradlew --info -PmavenUser=${env.REPO_CREDENTIAL_USR} -PmavenPassword=${env.REPO_CREDENTIAL_PSW} publish"
+          sh "./gradlew -PmavenUser=${env.REPO_CREDENTIAL_USR} -PmavenPassword=${env.REPO_CREDENTIAL_PSW} publish"
         }
       }
     }
