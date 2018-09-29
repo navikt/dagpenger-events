@@ -24,6 +24,8 @@ pipeline {
       }
 
       steps {
+        archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+        
         withCredentials([usernamePassword(credentialsId: 'repo.adeo.no', usernameVariable: 'REPO_CREDENTIAL_USR', passwordVariable: 'REPO_CREDENTIAL_PSW')]) {
           sh "git status"
           sh "./gradlew -PmavenUser=${env.REPO_CREDENTIAL_USR} -PmavenPassword=${env.REPO_CREDENTIAL_PSW} publish"
