@@ -16,7 +16,6 @@ apply {
     plugin("com.cinnober.gradle.semver-git")
 }
 
-
 repositories {
     jcenter()
     maven(url = "http://packages.confluent.io/maven/")
@@ -39,7 +38,13 @@ publishing {
 
     repositories {
         maven {
-            url = uri("https://repo.adeo.no/repository/maven-releases/")
+            val version = project.version as String
+
+            url = if (version.endsWith("-SNAPSHOT")) {
+                uri("https://repo.adeo.no/repository/maven-snapshots/")
+            } else {
+                uri("https://repo.adeo.no/repository/maven-releases/")
+            }
         }
     }
 }
