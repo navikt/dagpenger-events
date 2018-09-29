@@ -2,9 +2,21 @@ pipeline {
   agent any
 
   stages {
-    stage('Build library') {
+    stage('Install dependencies') {
       steps {
-        sh "./gradlew jar"
+        sh "./gradlew assemble"
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh "./gradlew check"
+      }
+    }
+
+    stage('Package') {
+      steps {
+        sh "./gradlew check"
         sh "git status"
       }
     }
