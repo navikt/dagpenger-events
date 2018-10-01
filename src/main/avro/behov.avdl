@@ -7,7 +7,7 @@ protocol Dagpenger {
 
   record Behov {
     string tema;
-    union { null, array<Dokument> } dokuementListe = null;
+    union { null, array<Dokument> } dokumentListe = null;
   }
 
 
