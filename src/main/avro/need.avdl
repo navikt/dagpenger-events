@@ -2,6 +2,7 @@
 protocol DagpengerNeed {
   record Dokument {
     string dokumentId;
+    string navSkjemaId;
   }
 
   record Need {
