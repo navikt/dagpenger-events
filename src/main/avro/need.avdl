@@ -1,0 +1,13 @@
+@namespace("no.nav.dagpenger.events.avro.need")
+protocol DagpengerNeed {
+  record Dokument {
+    string dokumentId;
+  }
+
+  record Need {
+    string tema;
+    union { null, array<Dokument> } dokuementListe = null;
+  }
+
+
+}
