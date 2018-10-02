@@ -5,10 +5,12 @@ protocol Dagpenger {
     string navSkjemaId;
   }
 
-  record Behov {
+  record JournalPost {
     string tema;
     union { null, array<Dokument> } dokumentListe = null;
   }
 
-
+  record Behov {
+     union { null, JournalPost } journalPost = null;
+  }
 }
