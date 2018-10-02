@@ -1,0 +1,16 @@
+@namespace("no.nav.dagpenger.events.avro")
+protocol Dagpenger {
+  record Dokument {
+    string dokumentId;
+    string navSkjemaId;
+  }
+
+  record JournalPost {
+    string tema;
+    union { null, array<Dokument> } dokumentListe = null;
+  }
+
+  record Behov {
+     union { null, JournalPost } journalPost = null;
+  }
+}
