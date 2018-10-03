@@ -5,17 +5,17 @@ protocol Dagpenger {
     string navSkjemaId;
   }
 
-  enum JournalPostType {
+  enum JournalpostType {
       NY, GJENOPPTAK, ETTERSENDING, UKJENT
   }
 
-  record JournalPost {
+  record Journalpost {
     string tema;
-    union { null, JournalPostType } journalPostType = null;
+    union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
   }
 
   record Behov {
-     union { null, JournalPost } journalPost = null;
+     union { null, Journalpost } journalpost = null;
   }
 }
