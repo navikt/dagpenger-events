@@ -13,6 +13,7 @@ protocol Dagpenger {
     string tema;
     union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
+    union { null, string } behandleneEnhet = null;
   }
 
   record Behov {
