@@ -14,6 +14,8 @@ protocol Dagpenger {
     union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
     union { null, string } behandleneEnhet = null;
+    union { null, string } fagsakId = null;
+    union { null, string } oppgaveId = null;
   }
 
   record Behov {
