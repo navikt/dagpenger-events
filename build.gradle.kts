@@ -6,6 +6,9 @@ plugins {
 }
 
 buildscript {
+    repositories {
+        maven("https://repo.adeo.no/repository/maven-central")
+    }
     dependencies {
         classpath("com.cinnober.gradle:semver-git:2.2.0")
     }
@@ -17,8 +20,8 @@ apply {
 }
 
 repositories {
-    jcenter()
-    maven(url = "http://packages.confluent.io/maven/")
+    maven("https://repo.adeo.no/repository/maven-central")
+    maven("http://packages.confluent.io/maven/")
 }
 
 group = "no.nav.dagpenger"
