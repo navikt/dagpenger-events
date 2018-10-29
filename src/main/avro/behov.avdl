@@ -8,8 +8,7 @@ protocol Dagpenger {
       PERSON, ORGANISASJON
   }
 
-  record Bruker {
-    BrukerType brukerType;
+  record Søker {
     string identifikator;
   }
 
@@ -22,7 +21,7 @@ protocol Dagpenger {
     string tema;
     union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
-    union { null, array<Bruker> } brukerListe = null;
+    union { null, Søker } søker = null;
     union { null, string } behandleneEnhet = null;
     union { null, string } fagsakId = null;
     union { null, string } oppgaveId = null;
