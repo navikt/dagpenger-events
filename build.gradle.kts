@@ -25,7 +25,7 @@ repositories {
 }
 
 group = "no.nav.dagpenger"
-version = "0.1.6-SNAPSHOT"
+version = "0.1.7-SNAPSHOT"
 
 val avroVersion = "1.8.2"
 
