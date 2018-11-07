@@ -23,7 +23,6 @@ protocol Dagpenger {
     union { null, Søker } søker = null;
     union { null, string } behandleneEnhet = null;
     union { null, string } fagsakId = null;
-    union { null, string } oppgaveId = null;
   }
 
   record Behov {
