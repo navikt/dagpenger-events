@@ -39,8 +39,6 @@ val sourcesJar by tasks.registering(Jar::class) {
 }
 
 publishing {
-
-
     publications {
         create("default", MavenPublication::class.java) {
             from(components["java"])
@@ -67,14 +65,11 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/navikt/kafka-embedded-env.git")
-                    developerConnection.set("scm:git:git://github.com/navikt/kafka-embedded-env.git")
-                    url.set("https://github.com/navikt/kafka-embedded-env")
+                    connection.set("scm:git:git://github.com/navikt/dagpenger-events.git")
+                    developerConnection.set("scm:git:git://github.com/navikt/dagpenger-events.git")
+                    url.set("https://github.com/navikt/dagpenger-events")
                 }
-
             }
-
-
         }
     }
 
