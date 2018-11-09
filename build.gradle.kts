@@ -20,7 +20,7 @@ apply {
 }
 
 repositories {
-    maven("https://repo.adeo.no/repository/maven-central")
+    mavenCentral()
     maven("http://packages.confluent.io/maven/")
 }
 
@@ -33,10 +33,48 @@ dependencies {
     api("org.apache.avro:avro:$avroVersion")
 }
 
+val sourcesJar by tasks.registering(Jar::class) {
+    classifier = "sources"
+    from(sourceSets["main"].allSource)
+}
+
 publishing {
+
+
     publications {
         create("default", MavenPublication::class.java) {
             from(components["java"])
+            artifact(sourcesJar.get())
+
+            pom {
+                name.set("dagpenger-events")
+                description.set("Avro schemas for dagpenger events")
+                url.set("https://github.com/navikt/dagpenger-events")
+                withXml {
+                    asNode().appendNode("packaging", "jar")
+                }
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        name.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        organization.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
+                        organizationUrl.set("https://www.nav.no")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/navikt/kafka-embedded-env.git")
+                    developerConnection.set("scm:git:git://github.com/navikt/kafka-embedded-env.git")
+                    url.set("https://github.com/navikt/kafka-embedded-env")
+                }
+
+            }
+
+
         }
     }
 
