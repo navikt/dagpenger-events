@@ -5,8 +5,22 @@ script:
 - "./gradlew test build"
 env:
   global:
+  - OSSRH_JIRA_USERNAME=navikt
+  - GPG_KEY_NAME=navikt
   - secure: dkOMSijI7Zbr7lb1G5mmRTiII9QQPq1PZs3hK7513uDapCiPx29/YuhVGCg2++fXVok6HZogR4i70L4v7HX3U12BYpyNaQ9WNVvhWOnhn1RjT7ZM8MiD35XvlJxIU/R+i5BjDK9vwy4mXGm/4ipE/ZmAcp1mN8UGhMfjyQJueMKaeHhaaFub6gac60S0aE6Et7VjaMhTcmf8szXfS31m7GkKAaIWqH6hzwj23CYiI+bYx4FtnQyC41hEVBJgd0ev2FXZxyaTu5SsNl6mCJV+ucaJ/OtIKEr0kayR2ynF/skLr0FQnLvWPpOQSNduHpQx2lvzMHCjnkoFDUsj9ILkqEsHwEg4HUhTV2zRRqISZYrmGuD7BS2qry8KSiCqsxHGeyJCVeb9P3Tav+BgQZWWm7Tu8cvJY3pllR4sD6L1iuwMOar06yVKxdKD08Vn8tc8QuPWo8H9jHBgBQ/xe/3mse4eCQ+GO3V2kY7uD8bghoRB8fMp8gKzsYgk2Tx7brTYF/jJ1b0+NzaOc9lYbgTQqrVvFdmDwDWTRM7I5XddlMQzHK1cCVEE507DMsNYKYTDOPkwSQiiscELIlYcgIC7Jbe2ITalxVdGU4rd52Jnwlb4CE3+EaKQJaHbQ/WcZGS0VNJB3eULxDMz2pnqdER2WW388zVNxQPJXUY1vlUqAx8=
   - secure: Dm1j8chLSQXKWGqkD+hc9RERVs6SDIatBQaO4fjNKWUi/402fBhbsyJax8Yz0+2TlbPIW0VmA/3K9FS8rG5GlRMT5cWVe1pUSlo7j/omHFwz1IxEqXQM2myqtiQ3jNm9tbueXKyqpJvT/qXkBw5UMCi3OT35yEjEEYMoB7QZTrtZat8A+1Sk3i3yxHd083xAizY4BVNHT2uKn2pfsQQnBKtH0vHU2yLng6JcJQYC2xfM4ibbStO7Din6zL6CatPUTCKUsyugD84AdieorhyrqShTtphrvmCQQy4xKHXGvnM1dGFZHhwTsIO03dFXn7y9G+u2wI5LVa6AUkFUhh5HItl1GtvEbGGhztkV1YZ2VGSSSgLzLCMmluvmLuGOPOF82q28VTO0/lNpwh+g8WuZoOx3w3e93fdyTxDWYJHIZPaohuAJd+nveMNz95+L9eaYPyygpgIeTilxxRBrAprahz+s3uk3LE0GLujruTzHUBLTn85HOdpP8jhX7BsaqbX/3gRygcuzbRBJZjYp1JmDkeduelBSNK5D124Jpi8vTJgBn09Ksd3tc7Y4gA3ZmoYnvBpL48nTRCdlGT8ufS1VdaqLurCQJv85i/qfo/QZYkWEcKjHwJ0CF087o79p5kKQLHLMWHwFO9tjUvdtnuC0o1/nsyRswOiFqlr3nkKsklI=
 before_install:
 - openssl aes-256-cbc -K $encrypted_8e63f1f6c3b0_key -iv $encrypted_8e63f1f6c3b0_iv
   -in travis/codesigning.asc.enc -out travis/codesigning.asc -d
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+deploy:
+  provider: script
+  script: "./gradlew publish --info --stacktrace closeAndReleaseRepository"
+  on:
+    branch: master
