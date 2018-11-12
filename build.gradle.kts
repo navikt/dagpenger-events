@@ -26,7 +26,6 @@ repositories {
     maven("http://packages.confluent.io/maven/")
 }
 
-
 val avroVersion = "1.8.2"
 
 val gitVersion: groovy.lang.Closure<Any> by extra
@@ -95,7 +94,7 @@ publishing {
 
 signing {
     useGpgCmd()
-    ext["signing.gnupg.keyName"] =  System.getenv("GPG_KEY_NAME")
+    ext["signing.gnupg.keyName"] = System.getenv("GPG_KEY_NAME")
     ext["signing.gnupg.passphrase"] = System.getenv("GPG_PASSPHRASE")
     ext["signing.gnupg.useLegacyGpg"] = true
     sign(publishing.publications.getAt("mavenJava"))
