@@ -22,6 +22,6 @@ cache:
   - $HOME/.gradle/wrapper/
 deploy:
   provider: script
-  script: "./gradlew publish --info --stacktrace closeAndReleaseRepository"
+  script: "./gradlew publish --info --stacktrace getStagingProfile"
   on:
     branch: master
