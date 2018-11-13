@@ -18,9 +18,8 @@ repositories {
 }
 
 val avroVersion = "1.8.2"
-val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
-version = gitVersion()
+version = "0.1.9-SNAPSHOT"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
