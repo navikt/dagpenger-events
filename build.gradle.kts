@@ -108,7 +108,6 @@ nexusStaging {
     packageGroup = "no.nav"
 }
 
-
 spotless {
     kotlin {
         ktlint()
