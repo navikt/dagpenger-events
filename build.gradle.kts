@@ -98,7 +98,7 @@ signing {
     ext["signing.gnupg.keyName"] = System.getenv("GPG_KEY_NAME")
     ext["signing.gnupg.passphrase"] = System.getenv("GPG_PASSPHRASE")
     ext["signing.gnupg.useLegacyGpg"] = true
-    sign(publishing.publications.getAt("mavenJava"))
+    sign(publishing.publications["mavenJava"])
 }
 
 spotless {
