@@ -12,6 +12,7 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_8e63f1f6c3b0_key -iv $encrypted_8e63f1f6c3b0_iv
   -in travis/codesigning.asc.enc -out travis/codesigning.asc -d
+- gpg --fast-import travis/codesigning.asc
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
