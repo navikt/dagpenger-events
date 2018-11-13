@@ -18,7 +18,7 @@ protocol Dagpenger {
   }
 
   record Journalpost {
-    string id;
+    string journalpostId;
     union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
     union { null, Søker } søker = null;
