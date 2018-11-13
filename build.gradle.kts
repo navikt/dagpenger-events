@@ -31,7 +31,7 @@ val avroVersion = "1.8.2"
 
 val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
-version = "0.1.8-SNAPSHOT"
+version = "0.1.8"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
@@ -105,6 +105,7 @@ signing {
 nexusStaging {
     username = System.getenv("OSSRH_JIRA_USERNAME")
     password = System.getenv("OSSRH_JIRA_PASSWORD")
+    packageGroup = "no.nav"
 }
 
 spotless {
