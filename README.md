@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/navikt/dagpenger-events.svg?branch=master)](https://travis-ci.org/navikt/dagpenger-events)
+
 # Event repository
 
 All events are expressed with Avro IDL schemas.
