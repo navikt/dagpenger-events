@@ -31,7 +31,7 @@ val avroVersion = "1.8.2"
 
 val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
-version = "0.1.7-SNAPSHOT"
+version = "0.1.7"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
