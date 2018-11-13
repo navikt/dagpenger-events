@@ -27,7 +27,7 @@ protocol Dagpenger {
   }
 
   record Behov {
-    string _id;
+    string behovId;
     union { null, Journalpost } journalpost = null;
   }
 }
