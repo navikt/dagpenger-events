@@ -2,7 +2,9 @@ plugins {
     id("java-library")
     id("com.diffplug.gradle.spotless") version "3.13.0"
     id("com.commercehub.gradle.plugin.avro") version "0.14.2"
+    id("com.palantir.git-version") version "0.11.0"
     id("maven-publish")
+    id("signing")
 }
 
 buildscript {
@@ -24,10 +26,11 @@ repositories {
     maven("http://packages.confluent.io/maven/")
 }
 
+val avroVersion = "1.8.2"
+
+val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
 version = "0.1.7-SNAPSHOT"
-
-val avroVersion = "1.8.2"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
@@ -40,7 +43,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 
 publishing {
     publications {
-        create("default", MavenPublication::class.java) {
+        create("mavenJava", MavenPublication::class.java) {
             from(components["java"])
             artifact(sourcesJar.get())
 
@@ -75,15 +78,26 @@ publishing {
 
     repositories {
         maven {
+            credentials {
+                username = System.getenv("OSSRH_JIRA_USERNAME")
+                username = System.getenv("OSSRH_JIRA_PASSWORD")
+            }
             val version = project.version as String
-
             url = if (version.endsWith("-SNAPSHOT")) {
-                uri("https://repo.adeo.no/repository/maven-snapshots/")
+                uri("https://oss.sonatype.org/content/repositories/snapshots")
             } else {
-                uri("https://repo.adeo.no/repository/maven-releases/")
+                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
             }
         }
     }
+}
+
+signing {
+    useGpgCmd()
+    ext["signing.gnupg.keyName"] = System.getenv("GPG_KEY_NAME")
+    ext["signing.gnupg.passphrase"] = System.getenv("GPG_PASSPHRASE")
+    ext["signing.gnupg.useLegacyGpg"] = true
+    sign(publishing.publications.getAt("mavenJava"))
 }
 
 spotless {
