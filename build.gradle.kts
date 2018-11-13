@@ -19,7 +19,7 @@ repositories {
 
 val avroVersion = "1.8.2"
 group = "no.nav.dagpenger"
-version = "0.1.9-SNAPSHOT"
+version = "0.1.8-SNAPSHOT"
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
