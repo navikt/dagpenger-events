@@ -92,7 +92,6 @@ signing {
     sign(publishing.publications["mavenJava"])
 }
 
-
 //nexusStaging {
 //    username = System.getenv("OSSRH_JIRA_USERNAME")
 //    password = System.getenv("OSSRH_JIRA_PASSWORD")
