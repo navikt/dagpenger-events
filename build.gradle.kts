@@ -8,18 +8,9 @@ plugins {
     id("io.codearte.nexus-staging") version "0.12.0"
 }
 
-buildscript {
-    repositories {
-        maven("https://repo.adeo.no/repository/maven-central")
-    }
-    dependencies {
-        classpath("com.cinnober.gradle:semver-git:2.2.0")
-    }
-}
 
 apply {
     plugin("com.diffplug.gradle.spotless")
-    plugin("com.cinnober.gradle.semver-git")
 }
 
 repositories {
@@ -31,7 +22,9 @@ val avroVersion = "1.8.2"
 
 val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
-version = "0.1.8"
+version = gitVersion()
+
+
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
