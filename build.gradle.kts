@@ -105,7 +105,6 @@ signing {
 nexusStaging {
     username = System.getenv("OSSRH_JIRA_USERNAME")
     password = System.getenv("OSSRH_JIRA_PASSWORD")
-    packageGroup = "no.nav"
 }
 
 spotless {
