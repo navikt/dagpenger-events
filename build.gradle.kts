@@ -5,6 +5,7 @@ plugins {
     id("com.palantir.git-version") version "0.11.0"
     id("maven-publish")
     id("signing")
+    id("io.codearte.nexus-staging") version "0.12.0"
 }
 
 buildscript {
