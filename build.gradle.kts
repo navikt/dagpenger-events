@@ -81,7 +81,7 @@ publishing {
         maven {
             credentials {
                 username = System.getenv("OSSRH_JIRA_USERNAME")
-                username = System.getenv("OSSRH_JIRA_PASSWORD")
+                password = System.getenv("OSSRH_JIRA_PASSWORD")
             }
             val version = project.version as String
             url = if (version.endsWith("-SNAPSHOT")) {
