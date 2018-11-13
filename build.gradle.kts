@@ -8,7 +8,6 @@ plugins {
     id("io.codearte.nexus-staging") version "0.12.0"
 }
 
-
 apply {
     plugin("com.diffplug.gradle.spotless")
 }
@@ -23,8 +22,6 @@ val avroVersion = "1.8.2"
 val gitVersion: groovy.lang.Closure<Any> by extra
 group = "no.nav.dagpenger"
 version = gitVersion()
-
-
 
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
