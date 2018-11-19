@@ -21,6 +21,11 @@ val avroVersion = "1.8.2"
 group = "no.nav.dagpenger"
 version = "0.1.8-SNAPSHOT"
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 dependencies {
     api("org.apache.avro:avro:$avroVersion")
 }
