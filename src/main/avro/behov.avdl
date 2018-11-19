@@ -14,7 +14,7 @@ protocol Dagpenger {
 
   record Dokument {
     string dokumentId;
-    string navSkjemaId;
+    union { null, string } navSkjemaId = null;
   }
 
   record Journalpost {
