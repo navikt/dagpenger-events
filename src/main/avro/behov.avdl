@@ -1,14 +1,18 @@
 @namespace("no.nav.dagpenger.events.avro")
 protocol Dagpenger {
-  enum JournalpostType {
-      NY, GJENOPPTAK, ETTERSENDING, MANUELL, UKJENT
+
+  record Søknad {
+    union { null, string } vedtakstype = null;
+    union { null, string } rettighetsType = null;
   }
 
-  enum BrukerType {
-      PERSON, ORGANISASJON
+  record Ettersending {
+    union { null, string } rettighetsType = null;
   }
 
-  record Søker {
+  record Annet {}
+
+  record Mottaker {
     string identifikator;
   }
 
@@ -21,14 +25,21 @@ protocol Dagpenger {
     string journalpostId;
     union { null, JournalpostType } journalpostType = null;
     union { null, array<Dokument> } dokumentListe = null;
-    union { null, Søker } søker = null;
-    union { null, string } behandleneEnhet = null;
-    union { null, string } fagsakId = null;
-    union { null, string } gsaksakId = null;
+  }
+
+  record HenvendelsesType {
+    union { null, Søknad } søknad = null;
+    union { null, Ettersending } ettersending = null;
+    union { null, Annet } annet = null;
   }
 
   record Behov {
     string behovId;
+    HenvendelsesType henvendelsesType;
+    union { null, Mottaker } mottaker = null;
+    union { null, string } behandleneEnhet = null;
+    union { null, string } fagsakId = null;
+    union { null, string } gsaksakId = null;
     union { null, Journalpost } journalpost = null;
   }
 }
