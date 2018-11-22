@@ -40,6 +40,6 @@ protocol Dagpenger {
     union { null, string } fagsakId = null;
     union { null, string } gsaksakId = null;
     union { null, Journalpost } journalpost = null;
-    union { null, boolean } trengerManuellBehandling;
+    boolean trengerManuellBehandling = false;
   }
 }
