@@ -9,6 +9,7 @@ fun Behov.isAnnet() = this.getHenvendelsesType().getAnnet() != null
 fun Behov.hasBehandlendeEnhet() = this.getBehandleneEnhet() != null
 fun Behov.hasFagsakId() = this.getFagsakId() != null
 fun Behov.hasGsakId() = this.getGsaksakId() != null
+fun Behov.hasHenvendelsesType() = this.getHenvendelsesType() != null
 
 fun Behov.isGjenopptakSoknad() = this.getHenvendelsesType()?.getSøknad()?.getVedtakstype()?.equals("GJENOPPTAK") ?: false
 fun Behov.isNySoknad() = this.getHenvendelsesType()?.getSøknad()?.getVedtakstype()?.equals("NY") ?: false
