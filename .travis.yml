@@ -18,10 +18,17 @@ before_cache:
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 deploy:
   provider: script
   script: "./gradlew publish --info --stacktrace getStagingProfile"
   on:
     branch: master
+notifications:
+  slack:
+    rooms:
+      secure: OryM4rqFIYisgVyRYc4OP+vEPzbcUBbYkVMtQAyoQANEuGmH8SplXthmhyMggvD1s7KCqvZcHtcWs38D97Vkg7E/TNrxmnvrzZEKOLHdDu0CUQPvjLvs9CNdJFtlVJPJlpqEbzu0Yva76OjDnvioStmt9kF25BK6kNzWT3fhwmVvBKJU5rycZ7vhD/C+InJE9Nugynkkix/jW1F/fcAXgBTtIp1Ap7dzoiWAdR9IRkyuZXzkm9RejlhU1Yx9IffQwAXERpPLBTWYcljNjgZk8v4WRc9Nv9MVZXbrbOzl+hC8YvadqSLHBhURK/eHCeN/KGppp86RiKOGn3zaFGe+1u1yPogCk8rNXH0W0ng8Zmr8V9WyKCmouUFcDeYiHesOm+iBOb5R6Egwu3FG6Di+gVxwa0cqQKP2mLhN0AJPjWNTrXFAKVn+rthZzP82Z6Zd0GPYx85clvoI8beGHxBq1ROJBb1e8uft2+EZdjyt/F7fxEUUgARTmSX8XrS8VXQ3iIKURe/kM2P7Vc3dlH51H0u6efS6+BDnyTzF8ifzZKYl2UguhDRbxWEmStCCFeZQ7YK29minRUjPw6QN1NoeQ7yUS1OmiGsA6cLr41YGPAJmdnWD6Nr/aUR7crUqAAaWxg0S8UEeWlWx4uUhzeLFWi+iUyDsIX4NEWRemJ9ODRY=
+  on_success: change
+  on_failure: always
+  on_pull_requests: false
