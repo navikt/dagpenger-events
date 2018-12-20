@@ -1,11 +1,11 @@
 @namespace("no.nav.dagpenger.events.avro")
 protocol Dagpenger {
 
-  enum Rettighetstype{
+  enum Rettighetstype {
     ORDINÆRE_DAGPENGER, DAPENGER_UNDER_PERMITERING, PERMITERING_FRA_FISKEINDUSTRIEN, DAGPENGER_VED_KONKURS, EKSPORT
   }
 
-  enum Vedtakstype{
+  enum Vedtakstype {
     NY_RETTIGHET, GJENOPPTAK
   }
 
@@ -34,15 +34,9 @@ protocol Dagpenger {
     union { null, array<Dokument> } dokumentListe = null;
   }
 
-  record HenvendelsesType {
-    union { null, Søknad } søknad = null;
-    union { null, Ettersending } ettersending = null;
-    union { null, Annet } annet = null;
-  }
-
   record Behov {
     string behovId;
-    HenvendelsesType henvendelsesType;
+    union { null, Søknad, Ettersending, Annet } henvendelsesType = null;
     union { null, Mottaker } mottaker = null;
     union { null, string } behandleneEnhet = null;
     union { null, string } fagsakId = null;

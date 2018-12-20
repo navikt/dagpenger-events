@@ -29,6 +29,9 @@ java {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
+    testImplementation("junit:junit:4.12")
     api("org.apache.avro:avro:$avroVersion")
 }
 
