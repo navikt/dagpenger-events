@@ -18,5 +18,5 @@ fun Behov.hasHenvendelsesType() = this.getHenvendelsesType() != null
 fun Behov.isGjenopptakSoknad() = isSøknadsType(Vedtakstype.GJENOPPTAK)
 fun Behov.isNySoknad() = isSøknadsType(Vedtakstype.NY_RETTIGHET)
 
-private inline fun Behov.isSøknadsType(type: Vedtakstype) = isSoknad() && (this.getHenvendelsesType() as Søknad).getVedtakstype() == type
-
+private fun Behov.isSøknadsType(type: Vedtakstype) =
+    isSoknad() && (this.getHenvendelsesType() as Søknad).getVedtakstype() == type
