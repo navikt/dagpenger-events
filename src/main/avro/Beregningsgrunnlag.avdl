@@ -14,15 +14,24 @@ protocol Dagpenger {
   }
 
 
-  record Inntekt {
-    // todo - hele grunnlaget?
+  enum Maned {
+    januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember
+  }
 
+  record Inntekt {
+    string virksomhet;
+    int ar;
+    Maned maned;
+    @java-class("java.math.BigDecimal") string belop;
+    string inntektstype;
+    string beskrivelse;
+    union { null, string } tilleggsinformasjon;
   }
 
   record Beregningsgrunnlag {
       string id;
       union { null, array<Regel> } regler = null;
-      union { null, Inntekt } inntekt = null;
+      union { null, array<Inntekt> } inntekter = null;
 
   }
 }
