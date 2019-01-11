@@ -1,16 +1,13 @@
 @namespace("no.nav.dagpenger.events.avro")
+
 protocol Dagpenger {
 
   enum RegelType {
-      FIRE_FIRE, FIRE_ELLEVE
+    FIRE_FIRE, FIRE_ELLEVE
   }
 
   record Regel {
-      RegelType type;
-      boolean verneplikt;
-      boolean fangstOgFisk;
-      boolean nittiBarn;
-
+    RegelType type;
   }
 
   enum Maned {
@@ -27,10 +24,18 @@ protocol Dagpenger {
     union { null, string } tilleggsinformasjon = null;
   }
 
+  record Inntektsdata {
+    string fraDato;
+    boolean verneplikt;
+    boolean fangstOgFisk;
+    union { null, array<Inntekt> } inntekter = null;
+  }
+
   record Beregningsgrunnlag {
-      string id;
-      union { null, array<Regel> } regler = null;
-      union { null, array<Inntekt> } inntekter = null;
+    string id;
+    string motakerIdentifikator;
+    union { null, array<Regel> } regler = null;
+    union { null, Inntektsdata } inntekter = null;
 
   }
 }
