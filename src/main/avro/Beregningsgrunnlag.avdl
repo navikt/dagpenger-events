@@ -13,7 +13,6 @@ protocol Dagpenger {
 
   }
 
-
   enum Maned {
     januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember
   }
@@ -22,10 +21,10 @@ protocol Dagpenger {
     string virksomhet;
     int ar;
     Maned maned;
-    @java-class("java.math.BigDecimal") string belop;
+    @java-class("java.math.BigDecimal") @logicalType("DECIMAL") @precision("4") @scale("2") string belop;
     string inntektstype;
     string beskrivelse;
-    union { null, string } tilleggsinformasjon;
+    union { null, string } tilleggsinformasjon = null;
   }
 
   record Beregningsgrunnlag {
