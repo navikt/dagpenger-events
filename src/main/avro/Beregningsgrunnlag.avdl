@@ -1,0 +1,45 @@
+@namespace("no.nav.dagpenger.events.avro")
+
+protocol Dagpenger {
+
+  enum RegelType {
+    FIRE_FIRE, FIRE_ELLEVE
+  }
+
+  record Regel {
+    RegelType type;
+  }
+
+  enum Maned {
+    januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember
+  }
+
+  enum Inntektstype{
+    lonnsinntekt, naringsinntekt, pensjonTrygd, ytelseFraOffentlige
+  }
+
+  record Inntekt {
+    string virksomhet;
+    int ar;
+    Maned maned;
+    @java-class("java.math.BigDecimal") @logicalType("DECIMAL") @precision("4") @scale("2") string belop;
+    Inntektstype inntektstype;
+    string beskrivelse;
+    union { null, string } tilleggsinformasjon = null;
+  }
+
+  record Inntektsdata {
+    string fraDato;
+    boolean verneplikt;
+    boolean fangstOgFisk;
+    union { null, array<Inntekt> } inntekter = null;
+  }
+
+  record Beregningsgrunnlag {
+    string id;
+    string aktorId;
+    string vedtaksId;
+    union { null, array<Regel> } regler = null;
+    union { null, Inntektsdata } inntekter = null;
+  }
+}
