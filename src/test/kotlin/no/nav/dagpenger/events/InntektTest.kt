@@ -1,6 +1,7 @@
 package no.nav.dagpenger.events
 
 import no.nav.dagpenger.events.avro.Inntekt
+import no.nav.dagpenger.events.avro.Inntektstype
 import no.nav.dagpenger.events.avro.Maned
 import org.junit.Test
 import java.math.BigDecimal
@@ -14,7 +15,7 @@ class InntektTest {
             belop = BigDecimal(100)
             ar = 2018
             maned = Maned.april
-            inntektstype = "Lonnsinntekt"
+            inntektstype = Inntektstype.lonnsinntekt
             beskrivelse = "Beskrivelse"
         }.build()
 
