@@ -66,7 +66,7 @@ protocol Dagpenger {
     union { null, MinsteinntektParametere, DagpengegrunnlagParametere } parametere = null;
   }
 
-  record Regelbehov {
+  record Vilkår {
     string id;
     string aktorId;
     string vedtaksId;
