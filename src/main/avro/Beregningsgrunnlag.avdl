@@ -35,11 +35,12 @@ protocol Dagpenger {
     union { null, array<Inntekt> } inntekter = null;
   }
 
-  record Beregningsgrunnlag {
+  record Regelbehov {
     string id;
     string aktorId;
     string vedtaksId;
     union { null, array<Regel> } regler = null;
     union { null, Inntektsdata } inntekter = null;
+
   }
 }
