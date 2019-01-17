@@ -44,7 +44,7 @@ protocol Dagpenger {
     BruktInntektsperiode bruktinntektsPeriode;
     boolean harAvtjentVerneplikt;
     boolean oppfyllerKravTilFangstOgFisk;
-    boolean harArbeidsperiodeEosSiste12Måneder;
+    boolean harArbeidsperiodeEøsSiste12Måneder;
   }
 
   record MinsteinntektResultat {
@@ -62,6 +62,7 @@ protocol Dagpenger {
 
   record Regel {
     RegelType type;
+    union { null, string } beregningsId = null;
     union { null, MinsteinntektResultat, DagpengegrunnlagResultat } resultat = null;
     union { null, MinsteinntektParametere, DagpengegrunnlagParametere } parametere = null;
   }

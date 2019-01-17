@@ -20,7 +20,7 @@ repositories {
 
 val avroVersion = "1.8.2"
 group = "no.nav.dagpenger"
-version = "0.2.0-SNAPSHOT"
+version = "0.2.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
