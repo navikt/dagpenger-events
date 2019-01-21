@@ -6,7 +6,8 @@ plugins {
     id("com.palantir.git-version") version "0.11.0"
     id("maven-publish")
     id("signing")
-    id("io.codearte.nexus-staging") version "0.12.0"
+    id("io.codearte.nexus-staging") version "0.20.0"
+    id("de.marcphilipp.nexus-publish") version "0.1.1"
 }
 
 apply {
@@ -14,18 +15,18 @@ apply {
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
     maven("http://packages.confluent.io/maven/")
 }
 
-val avroVersion = "1.8.2"
 group = "no.nav.dagpenger"
 version = "0.2.1-SNAPSHOT"
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+
+val avroVersion = "1.8.2"
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -104,6 +105,7 @@ nexusStaging {
     username = System.getenv("OSSRH_JIRA_USERNAME")
     password = System.getenv("OSSRH_JIRA_PASSWORD")
     packageGroup = "no.nav"
+    stagingProfileId = "3a10cafa813c47"
 }
 
 spotless {
