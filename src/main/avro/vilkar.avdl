@@ -71,6 +71,7 @@ protocol Dagpenger {
     string id;
     string aktorId;
     string vedtaksId;
+    string taskId;
     union { null, array<Regel> } regler = null;
     union { null, Inntektsdata } inntekter = null;
   }
