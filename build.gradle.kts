@@ -20,7 +20,7 @@ repositories {
 }
 
 group = "no.nav.dagpenger"
-version = "0.2.1"
+version = "0.2.1-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
