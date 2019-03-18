@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("java-library")
     kotlin("jvm") version "1.2.70"
@@ -19,20 +21,33 @@ repositories {
     maven("http://packages.confluent.io/maven/")
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 group = "no.nav.dagpenger"
-version = "0.2.1-SNAPSHOT"
+version = "0.3.0-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 val avroVersion = "1.8.2"
+val orgJsonVersion = "20180813"
+val jupiterVersion = "5.3.2"
+val moshiVersion = "1.8.0"
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
+    implementation("com.squareup.moshi:moshi:$moshiVersion")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("junit:junit:4.12")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$jupiterVersion")
+    testImplementation("org.json:json:$orgJsonVersion")
     api("org.apache.avro:avro:$avroVersion")
 }
 
