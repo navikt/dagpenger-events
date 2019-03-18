@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-library")
-    kotlin("jvm") version "1.2.70"
+    kotlin("jvm") version "1.3.21"
     id("com.diffplug.gradle.spotless") version "3.13.0"
     id("com.commercehub.gradle.plugin.avro") version "0.14.2"
     id("com.palantir.git-version") version "0.11.0"
