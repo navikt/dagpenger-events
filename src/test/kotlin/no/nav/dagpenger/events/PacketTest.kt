@@ -308,7 +308,7 @@ class PacketTest {
         assertEquals(complex, snapshot.getNullableObjectValue("complex", adapter::fromJson))
         assertEquals("qwe", snapshot.getNullableStringValue("anotherKey"))
         assertEquals(null, packet.getNullableObjectValue("notExisting", adapter::fromJson))
-        assertThrows<IllegalArgumentException> { packet.getObjectValue("notExisting", adapter::fromJson) }
+        assertThrows<IllegalArgumentException> { packet.getObjectValue("notExisting") { string -> adapter.fromJson(string) ?: throw java.lang.IllegalArgumentException() } }
     }
 
     data class ClassA(

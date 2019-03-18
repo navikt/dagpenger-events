@@ -109,7 +109,7 @@ class Packet constructor(jsonString: String) {
 
     fun getYearMonth(key: String) = getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun <T> getObjectValue(key: String, deserialize: (String) -> T): T = getNullableObjectValue(key, deserialize) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun <T : Any> getObjectValue(key: String, deserialize: (String) -> T): T = getNullableObjectValue(key, deserialize) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
