@@ -223,6 +223,27 @@ class PacketTest {
     }
 
     @Test
+    fun `can write and get YearMonth to packet`() {
+
+        val jsonString = """
+            {
+                "system_read_count": 5,
+                "key1": "value1"
+            }
+        """.trimIndent()
+        val packet = Packet(jsonString)
+
+        packet.putValue("yearmonth", YearMonth.of(2019, 2))
+        packet.putValue("notAYearMonth", "rubbish")
+
+        assertEquals(YearMonth.of(2019, 2), packet.getNullableYearMonth("yearmonth"))
+        assertEquals(YearMonth.of(2019, 2), packet.getYearMonth("yearmonth"))
+        assertEquals(null, packet.getNullableYearMonth("notExistiing"))
+        assertThrows<IllegalArgumentException> { packet.getYearMonth("notExistiing") }
+        assertThrows<DateTimeParseException> { packet.getNullableYearMonth("notAYearMonth") }
+    }
+
+    @Test
     fun `hasField `() {
 
         val jsonString = """

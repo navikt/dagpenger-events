@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonDataException
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.YearMonth
 
 class Packet constructor(jsonString: String) {
 
@@ -48,6 +49,10 @@ class Packet constructor(jsonString: String) {
         put(key, localDate)
     }
 
+    fun putValue(key: String, yearMonth: YearMonth) {
+        put(key, yearMonth)
+    }
+
     fun <T> putValue(key: String, thing: T, serialize: (T) -> String) {
         put(key, serialize(thing))
     }
@@ -77,6 +82,8 @@ class Packet constructor(jsonString: String) {
 
     fun getNullableLocalDate(key: String): LocalDate? = getValue(key)?.let { LocalDate.parse(it.toString()) }
 
+    fun getNullableYearMonth(key: String): YearMonth? = getValue(key)?.let { YearMonth.parse(it.toString()) }
+
     fun <T> getNullableObjectValue(key: String, deserialize: (String) -> T): T? =
         getNullableStringValue(key)?.let { deserialize(it) }
 
@@ -99,6 +106,8 @@ class Packet constructor(jsonString: String) {
     fun getStringValue(key: String) = getNullableStringValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getLocalDate(key: String) = getNullableLocalDate(key) ?: throw IllegalArgumentException("Null value for key=$key")
+
+    fun getYearMonth(key: String) = getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun <T> getObjectValue(key: String, deserialize: (String) -> T): T = getNullableObjectValue(key, deserialize) ?: throw IllegalArgumentException("Null value for key=$key")
 
