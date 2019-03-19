@@ -5,6 +5,8 @@ import no.nav.dagpenger.events.inntekt.v1.Inntekt.Companion.LAST_36_MONTHS
 import no.nav.dagpenger.events.inntekt.v1.Inntekt.Companion.findStartingMonth
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.time.YearMonth
 
@@ -53,7 +55,13 @@ class InntektTest {
 
     @Test
     fun `empty inntekt returns 0`() {
-        assertEquals(BigDecimal(0), Inntekt("nothing", emptyList()).sumInntektLast12Months(InntektKlasse.values().toList(), YearMonth.now().minusMonths(1)))
+        assertEquals(
+            BigDecimal(0),
+            Inntekt("nothing", emptyList()).sumInntektLast12Months(
+                InntektKlasse.values().toList(),
+                YearMonth.now().minusMonths(1)
+            )
+        )
     }
 
     @Test
@@ -123,4 +131,36 @@ class InntektTest {
             )
         )
     }
+
+    @Test
+    fun `filtering period of last three months affects sum of inntekt`() {
+        val filteredInntekt = testInntekt.filterPeriod(YearMonth.now().minusMonths(3), YearMonth.now().minusMonths(1))
+        assertEquals(
+            BigDecimal(9000),
+            filteredInntekt.sumInntektLast12Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1))
+        )
+        assertEquals(
+            BigDecimal(33000),
+            filteredInntekt.sumInntektLast12Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1))
+        )
+    }
+
+    @Test
+    fun `filtering period not overlapping exisiting months does not affect sum `() {
+        val filteredInntekt = testInntekt.filterPeriod(YearMonth.now().minusMonths(48), YearMonth.now().minusMonths(37))
+        assertEquals(
+            testInntekt.sumInntektLast12Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1)),
+            filteredInntekt.sumInntektLast12Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1))
+        )
+        assertEquals(
+            testInntekt.sumInntektLast36Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1)),
+            filteredInntekt.sumInntektLast36Months(listOf(InntektKlasse.ARBEIDSINNTEKT), YearMonth.now().minusMonths(1))
+        )
+    }
+
+    @Test
+    fun `filter period throws exception if from-argument is more recent than to`() {
+        assertThrows<IllegalArgumentException> { testInntekt.filterPeriod(YearMonth.of(2019, 5), YearMonth.of(2019, 4)) }
+    }
+
 }

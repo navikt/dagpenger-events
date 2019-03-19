@@ -1,9 +1,11 @@
 package no.nav.dagpenger.events.inntekt.v1
 
+import java.lang.IllegalArgumentException
 import java.math.BigDecimal
+import java.time.Year
 import java.time.YearMonth
 
-class Inntekt(val inntektsId: String, val inntektsListe: List<KlassifisertInntektMåned>) {
+class Inntekt(val inntektsId: String, private val inntektsListe: List<KlassifisertInntektMåned>) {
     internal companion object {
         val LAST_12_MONTHS = 11
         val LAST_36_MONTHS = 35
@@ -11,6 +13,11 @@ class Inntekt(val inntektsId: String, val inntektsListe: List<KlassifisertInntek
         fun findStartingMonth(senesteMåned: YearMonth, lengde: Int): YearMonth {
             return senesteMåned.minusMonths(lengde.toLong())
         }
+    }
+
+    fun filterPeriod(from: YearMonth, to: YearMonth) : Inntekt {
+        if (from.isAfter(to)) throw IllegalArgumentException("Argument from=$from is after argument to=$to")
+        return Inntekt(inntektsId, inntektsListe.filter { it.årMåned !in from..to })
     }
 
     fun sumInntektLast12Months(
