@@ -2,7 +2,6 @@ package no.nav.dagpenger.events.inntekt.v1
 
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
-import java.time.Year
 import java.time.YearMonth
 
 class Inntekt(val inntektsId: String, private val inntektsListe: List<KlassifisertInntektMåned>) {
@@ -15,7 +14,7 @@ class Inntekt(val inntektsId: String, private val inntektsListe: List<Klassifise
         }
     }
 
-    fun filterPeriod(from: YearMonth, to: YearMonth) : Inntekt {
+    fun filterPeriod(from: YearMonth, to: YearMonth): Inntekt {
         if (from.isAfter(to)) throw IllegalArgumentException("Argument from=$from is after argument to=$to")
         return Inntekt(inntektsId, inntektsListe.filter { it.årMåned !in from..to })
     }

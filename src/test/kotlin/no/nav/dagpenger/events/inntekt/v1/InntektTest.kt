@@ -162,5 +162,4 @@ class InntektTest {
     fun `filter period throws exception if from-argument is more recent than to`() {
         assertThrows<IllegalArgumentException> { testInntekt.filterPeriod(YearMonth.of(2019, 5), YearMonth.of(2019, 4)) }
     }
-
 }
