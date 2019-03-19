@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.YearMonth
 
-class SumInntekterTest {
+class SumInntektTest {
 
-    val arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month= (1..36).toList().map {
+    val arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month = (1..36).toList().map {
         KlassifisertInntektMåned(
             YearMonth.now().minusMonths(it.toLong()),
             listOf(
