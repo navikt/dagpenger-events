@@ -1,13 +1,16 @@
 package no.nav.dagpenger.events.inntekt.v1
 
+import no.nav.dagpenger.events.inntekt.v1.Inntekt.Companion.LAST_12_MONTHS
+import no.nav.dagpenger.events.inntekt.v1.Inntekt.Companion.LAST_36_MONTHS
+import no.nav.dagpenger.events.inntekt.v1.Inntekt.Companion.findStartingMonth
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.YearMonth
 
-class SumInntektTest {
+class InntektTest {
 
-    val arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month = (1..36).toList().map {
+    val testInntekt = Inntekt("id", inntektsListe = (1..36).toList().map {
         KlassifisertInntektMåned(
             YearMonth.now().minusMonths(it.toLong()),
             listOf(
@@ -21,7 +24,7 @@ class SumInntektTest {
                 )
             )
         )
-    }
+    })
 
     @Test
     fun `starting month should be april 2018 going back 12 months from march 2019 `() {
@@ -44,23 +47,26 @@ class SumInntektTest {
     }
 
     @Test
-    fun `empty list of inntekt returns 0`() {
-        assertEquals(BigDecimal(0), sumInntektLast12Months(emptyList(), emptyList(), YearMonth.now().minusMonths(1)))
+    fun `empty list of inntektsklasse returns 0`() {
+        assertEquals(BigDecimal(0), testInntekt.sumInntektLast12Months(emptyList(), YearMonth.now().minusMonths(1)))
+    }
+
+    @Test
+    fun `empty inntekt returns 0`() {
+        assertEquals(BigDecimal(0), Inntekt("nothing", emptyList()).sumInntektLast12Months(InntektKlasse.values().toList(), YearMonth.now().minusMonths(1)))
     }
 
     @Test
     fun ` should sum arbeidsinntekt`() {
         assertEquals(
-            BigDecimal(12000), sumInntektLast12Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(12000), testInntekt.sumInntektLast12Months(
                 listOf(InntektKlasse.ARBEIDSINNTEKT),
                 YearMonth.now().minusMonths(1)
             )
         )
 
         assertEquals(
-            BigDecimal(36000), sumInntektLast36Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(36000), testInntekt.sumInntektLast36Months(
                 listOf(InntektKlasse.ARBEIDSINNTEKT),
                 YearMonth.now().minusMonths(1)
             )
@@ -70,16 +76,14 @@ class SumInntektTest {
     @Test
     fun ` should sum arbeidsinntekt and dp fangst fiske `() {
         assertEquals(
-            BigDecimal(24000), sumInntektLast12Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(24000), testInntekt.sumInntektLast12Months(
                 listOf(InntektKlasse.DAGPENGER_FANGST_FISKE),
                 YearMonth.now().minusMonths(1)
             )
         )
 
         assertEquals(
-            BigDecimal(72000), sumInntektLast36Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(72000), testInntekt.sumInntektLast36Months(
                 listOf(InntektKlasse.DAGPENGER_FANGST_FISKE),
                 YearMonth.now().minusMonths(1)
             )
@@ -89,16 +93,14 @@ class SumInntektTest {
     @Test
     fun ` should sum multiple inntektsklasser`() {
         assertEquals(
-            BigDecimal(36000), sumInntektLast12Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(36000), testInntekt.sumInntektLast12Months(
                 listOf(InntektKlasse.DAGPENGER_FANGST_FISKE, InntektKlasse.ARBEIDSINNTEKT),
                 YearMonth.now().minusMonths(1)
             )
         )
 
         assertEquals(
-            BigDecimal(108000), sumInntektLast36Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(108000), testInntekt.sumInntektLast36Months(
                 listOf(InntektKlasse.DAGPENGER_FANGST_FISKE, InntektKlasse.ARBEIDSINNTEKT),
                 YearMonth.now().minusMonths(1)
             )
@@ -108,16 +110,14 @@ class SumInntektTest {
     @Test
     fun ` should return 0 when no inntekt matches `() {
         assertEquals(
-            BigDecimal(0), sumInntektLast12Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(0), testInntekt.sumInntektLast12Months(
                 listOf(InntektKlasse.SYKEPENGER),
                 YearMonth.now().minusMonths(1)
             )
         )
 
         assertEquals(
-            BigDecimal(0), sumInntektLast36Months(
-                arbeidsInntekt_1000_month_and_dpfangstfiske_2000_month,
+            BigDecimal(0), testInntekt.sumInntektLast36Months(
                 listOf(InntektKlasse.SYKEPENGER),
                 YearMonth.now().minusMonths(1)
             )
