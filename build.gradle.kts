@@ -26,7 +26,7 @@ tasks.withType<KotlinCompile> {
 }
 
 group = "no.nav.dagpenger"
-version = "0.3.3-SNAPSHOT"
+version = "0.3.4-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
