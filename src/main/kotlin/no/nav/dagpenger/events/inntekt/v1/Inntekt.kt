@@ -1,7 +1,6 @@
 package no.nav.dagpenger.events.inntekt.v1
 
 import java.lang.IllegalArgumentException
-import java.math.BigDecimal
 import java.time.YearMonth
 
 class Inntekt(val inntektsId: String, private val inntektsListe: List<KlassifisertInntektMåned>) {

@@ -31,73 +31,6 @@ class InntektTest {
     val testInntekt = Inntekt("id", testInntektsListe)
 
     @Test
-    fun `sum with empty list of inntektsklasserToSum returns 0`() {
-        assertEquals(BigDecimal(0), testInntektsListe.sumInntekt(emptyList()))
-    }
-
-    @Test
-    fun `empty inntekt returns 0`() {
-        assertEquals(BigDecimal(0), emptyList<KlassifisertInntektMåned>().sumInntekt(InntektKlasse.values().toList()))
-    }
-
-    @Test
-    fun ` should sum arbeidsinntekt correctly`() {
-        assertEquals(
-            BigDecimal(12000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
-        )
-
-        assertEquals(
-            BigDecimal(36000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
-        )
-    }
-
-    @Test
-    fun ` should sum dp fangst fiske correctly `() {
-        assertEquals(
-            BigDecimal(24000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
-        )
-
-        assertEquals(
-            BigDecimal(72000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
-        )
-    }
-
-    @Test
-    fun ` should sum multiple inntektsklasser`() {
-        assertEquals(
-            BigDecimal(36000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(
-                listOf(
-                    InntektKlasse.DAGPENGER_FANGST_FISKE,
-                    InntektKlasse.ARBEIDSINNTEKT
-                )
-            )
-        )
-
-        assertEquals(
-            BigDecimal(108000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(
-                listOf(
-                    InntektKlasse.DAGPENGER_FANGST_FISKE,
-                    InntektKlasse.ARBEIDSINNTEKT
-                )
-            )
-        )
-    }
-
-    @Test
-    fun ` should return 0 when no inntekt matches `() {
-        assertEquals(
-            BigDecimal(0),
-            testInntektsListe.sumInntekt(listOf(InntektKlasse.SYKEPENGER))
-        )
-    }
-
-    @Test
     fun `filtering period of last three months affects sum of inntekt`() {
         val filteredInntekt = testInntekt.filterPeriod(YearMonth.now().minusMonths(3), YearMonth.now().minusMonths(1))
         assertEquals(
@@ -106,7 +39,7 @@ class InntektTest {
         )
         assertEquals(
             BigDecimal(33000),
-            filteredInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
+            filteredInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
         )
     }
 
@@ -118,8 +51,8 @@ class InntektTest {
             filteredInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
         )
         assertEquals(
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT)),
-            filteredInntekt.splitIntoInntektsPerioder(senesteMåned).toList().flatten().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
+            testInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT)),
+            filteredInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
         )
     }
 

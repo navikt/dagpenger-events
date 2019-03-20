@@ -14,3 +14,6 @@ fun Collection<KlassifisertInntektMåned>.sumInntekt(inntektsKlasserToSum: List<
             .filter { it.inntektKlasse in inntektsKlasserToSum }
             .map { it.beløp }
     }.fold(BigDecimal.ZERO, BigDecimal::add)
+
+fun Triple<List<KlassifisertInntektMåned>, List<KlassifisertInntektMåned>, List<KlassifisertInntektMåned>>.all() =
+    this.toList().flatten()
