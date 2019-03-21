@@ -4,11 +4,27 @@ import java.lang.IllegalArgumentException
 import java.time.YearMonth
 
 class Inntekt(val inntektsId: String, private val inntektsListe: List<KlassifisertInntektMåned>) {
-    fun splitIntoInntektsPerioder(senesteMåned: YearMonth): Triple<List<KlassifisertInntektMåned>, List<KlassifisertInntektMåned>, List<KlassifisertInntektMåned>> {
+
+    fun splitIntoInntektsPerioder(senesteMåned: YearMonth): InntektsPerioder {
         return Triple(
-            inntektsListe.filter { it.årMåned in senesteMåned.minusYears(1).plusMonths(1)..senesteMåned },
-            inntektsListe.filter { it.årMåned in senesteMåned.minusYears(2).plusMonths(1)..senesteMåned.minusYears(1) },
-            inntektsListe.filter { it.årMåned in senesteMåned.minusYears(3).plusMonths(1)..senesteMåned.minusYears(2) }
+            (0L..11L).map { i ->
+                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
+                    senesteMåned.minusMonths(i),
+                    emptyList()
+                )
+            }.sortedBy { it.årMåned },
+            (12L..23L).map { i ->
+                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
+                    senesteMåned.minusMonths(i),
+                    emptyList()
+                )
+            }.sortedBy { it.årMåned },
+            (24L..35L).map { i ->
+                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
+                    senesteMåned.minusMonths(i),
+                    emptyList()
+                )
+            }.sortedBy { it.årMåned }
         )
     }
 

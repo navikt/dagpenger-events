@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.time.YearMonth
 
@@ -90,51 +89,112 @@ class InntektTest {
         assertEquals(12, third.size)
 
         assertTrue(first.all { it.årMåned in YearMonth.of(2018, 4)..YearMonth.of(2019, 3) })
+        assertEquals(YearMonth.of(2019, 3), first.last().årMåned)
+        assertEquals(YearMonth.of(2018, 4), first.first().årMåned)
+
         assertTrue(second.all { it.årMåned in YearMonth.of(2017, 4)..YearMonth.of(2018, 3) })
+        assertEquals(YearMonth.of(2018, 3), second.last().årMåned)
+        assertEquals(YearMonth.of(2017, 4), second.first().årMåned)
+
         assertTrue(third.all { it.årMåned in YearMonth.of(2016, 4)..YearMonth.of(2017, 3) })
+        assertEquals(YearMonth.of(2017, 3), third.last().årMåned)
+        assertEquals(YearMonth.of(2016, 4), third.first().årMåned)
     }
 
     @Test
     fun `inntektsPerioder correctly splits up inntekt for only last year`() {
         val senesteMåned = YearMonth.of(2019, 3)
         val onlyInntektLastYear = Inntekt("id", inntektsListe = (0..11).toList().map {
-            KlassifisertInntektMåned(senesteMåned.minusMonths(it.toLong()), emptyList())
+            KlassifisertInntektMåned(
+                senesteMåned.minusMonths(it.toLong()),
+                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+            )
         })
         val (first, second, third) = onlyInntektLastYear.splitIntoInntektsPerioder(senesteMåned)
 
         assertEquals(12, first.size)
-        assertEquals(0, second.size)
-        assertEquals(0, third.size)
+        assertEquals(12, second.size)
+        assertEquals(12, third.size)
+
         assertTrue(first.all { it.årMåned in YearMonth.of(2018, 4)..YearMonth.of(2019, 3) })
+        assertEquals(YearMonth.of(2019, 3), first.last().årMåned)
+        assertEquals(YearMonth.of(2018, 4), first.first().årMåned)
+
+        assertTrue(second.all { it.årMåned in YearMonth.of(2017, 4)..YearMonth.of(2018, 3) })
+        assertEquals(YearMonth.of(2018, 3), second.last().årMåned)
+        assertEquals(YearMonth.of(2017, 4), second.first().årMåned)
+
+        assertTrue(third.all { it.årMåned in YearMonth.of(2016, 4)..YearMonth.of(2017, 3) })
+        assertEquals(YearMonth.of(2017, 3), third.last().årMåned)
+        assertEquals(YearMonth.of(2016, 4), third.first().årMåned)
+
+        assertTrue(first.all { it.klassifiserteInntekter.isNotEmpty() })
+        assertTrue(second.all { it.klassifiserteInntekter.isEmpty() })
+        assertTrue(third.all { it.klassifiserteInntekter.isEmpty() })
     }
 
     @Test
     fun `inntektsPerioder correctly splits up inntekt missing earliest year`() {
         val senesteMåned = YearMonth.of(2019, 3)
         val noInntektThirdPeriod = Inntekt("id", inntektsListe = (0..23).toList().map {
-            KlassifisertInntektMåned(senesteMåned.minusMonths(it.toLong()), emptyList())
+            KlassifisertInntektMåned(
+                senesteMåned.minusMonths(it.toLong()),
+                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+            )
         })
 
         val (first, second, third) = noInntektThirdPeriod.splitIntoInntektsPerioder(senesteMåned)
-        assertEquals(12, noInntektThirdPeriod.splitIntoInntektsPerioder(senesteMåned).first.size)
-        assertEquals(12, noInntektThirdPeriod.splitIntoInntektsPerioder(senesteMåned).second.size)
-        assertEquals(0, noInntektThirdPeriod.splitIntoInntektsPerioder(senesteMåned).third.size)
+
+        assertEquals(12, first.size)
+        assertEquals(12, second.size)
+        assertEquals(12, third.size)
+
         assertTrue(first.all { it.årMåned in YearMonth.of(2018, 4)..YearMonth.of(2019, 3) })
+        assertEquals(YearMonth.of(2019, 3), first.last().årMåned)
+        assertEquals(YearMonth.of(2018, 4), first.first().årMåned)
+
         assertTrue(second.all { it.årMåned in YearMonth.of(2017, 4)..YearMonth.of(2018, 3) })
+        assertEquals(YearMonth.of(2018, 3), second.last().årMåned)
+        assertEquals(YearMonth.of(2017, 4), second.first().årMåned)
+
+        assertTrue(third.all { it.årMåned in YearMonth.of(2016, 4)..YearMonth.of(2017, 3) })
+        assertEquals(YearMonth.of(2017, 3), third.last().årMåned)
+        assertEquals(YearMonth.of(2016, 4), third.first().årMåned)
+
+        assertTrue(first.all { it.klassifiserteInntekter.isNotEmpty() })
+        assertTrue(second.all { it.klassifiserteInntekter.isNotEmpty() })
+        assertTrue(third.all { it.klassifiserteInntekter.isEmpty() })
     }
 
     @Test
     fun `inntektsPerioder correctly splits up noncontinous inntekt`() {
         val nonContinous = Inntekt("id", inntektsListe = ((0..5).toList() + (10..24).toList()).map {
-            KlassifisertInntektMåned(senesteMåned.minusMonths(it.toLong()), emptyList())
+            KlassifisertInntektMåned(
+                senesteMåned.minusMonths(it.toLong()),
+                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+            )
         })
 
         val (first, second, third) = nonContinous.splitIntoInntektsPerioder(senesteMåned)
-        assertEquals(8, nonContinous.splitIntoInntektsPerioder(senesteMåned).first.size)
-        assertEquals(12, nonContinous.splitIntoInntektsPerioder(senesteMåned).second.size)
-        assertEquals(1, nonContinous.splitIntoInntektsPerioder(senesteMåned).third.size)
+
+        assertEquals(12, first.size)
+        assertEquals(12, second.size)
+        assertEquals(12, third.size)
+
         assertTrue(first.all { it.årMåned in YearMonth.of(2018, 4)..YearMonth.of(2019, 3) })
+        assertEquals(YearMonth.of(2019, 3), first.last().årMåned)
+        assertEquals(YearMonth.of(2018, 4), first.first().årMåned)
+
         assertTrue(second.all { it.årMåned in YearMonth.of(2017, 4)..YearMonth.of(2018, 3) })
+        assertEquals(YearMonth.of(2018, 3), second.last().årMåned)
+        assertEquals(YearMonth.of(2017, 4), second.first().årMåned)
+
         assertTrue(third.all { it.årMåned in YearMonth.of(2016, 4)..YearMonth.of(2017, 3) })
+        assertEquals(YearMonth.of(2017, 3), third.last().årMåned)
+        assertEquals(YearMonth.of(2016, 4), third.first().årMåned)
+
+        assertEquals(8, first.filter { it.klassifiserteInntekter.isNotEmpty() }.size)
+        assertEquals(12, second.filter { it.klassifiserteInntekter.isNotEmpty() }.size)
+        assertEquals(1, third.filter { it.klassifiserteInntekter.isNotEmpty() }.size)
     }
 }
