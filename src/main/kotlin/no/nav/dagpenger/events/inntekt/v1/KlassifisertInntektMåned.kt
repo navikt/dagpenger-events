@@ -19,4 +19,3 @@ typealias InntektsPerioder = Triple<List<KlassifisertInntektMåned>, List<Klassi
 
 fun InntektsPerioder.all() =
     this.toList().flatten()
-
