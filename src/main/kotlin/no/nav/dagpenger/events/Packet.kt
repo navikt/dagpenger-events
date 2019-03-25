@@ -11,9 +11,12 @@ class Packet constructor(jsonString: String) {
     companion object {
         internal const val READ_COUNT = "system_read_count"
         internal const val STARTED = "system_started"
+        internal const val PROBLEM = "system_problem"
+
+        private val adapter = moshiInstance.adapter<MutableMap<String, Any?>>(MutableMap::class.java).lenient()
     }
 
-    private val adapter = moshiInstance.adapter<MutableMap<String, Any?>>(MutableMap::class.java).lenient()
+    private var problem: Problem? = null
     private val json: MutableMap<String, Any?> =
         adapter.fromJson(jsonString) ?: throw JsonDataException("Could not parse JSON: $jsonString")
 
@@ -25,6 +28,9 @@ class Packet constructor(jsonString: String) {
             json[STARTED] = LocalDateTime.now()
         }
         json[READ_COUNT] = (json[READ_COUNT] as Double).toInt() + 1
+        if (json.containsKey(PROBLEM)) {
+            problem = Problem.fromJson(this.getMapValue(PROBLEM))
+        }
     }
 
     private fun getValue(key: String): Any? = json[key]
@@ -66,7 +72,10 @@ class Packet constructor(jsonString: String) {
         json[key] = value
     }
 
-    fun toJson(): String? = adapter.toJson(json)
+    fun toJson(): String? {
+        json[PROBLEM] = problem
+        return adapter.toJson(json)
+    }
 
     fun hasField(key: String): Boolean = json.containsKey(key)
 
@@ -97,25 +106,49 @@ class Packet constructor(jsonString: String) {
         }
     }
 
-    fun getBigDecimalValue(key: String) = getNullableBigDecimalValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getBigDecimalValue(key: String) =
+        getNullableBigDecimalValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getIntValue(key: String) = getNullableIntValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getLongValue(key: String) = getNullableLongValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getLongValue(key: String) =
+        getNullableLongValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getStringValue(key: String) = getNullableStringValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getStringValue(key: String) =
+        getNullableStringValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getLocalDate(key: String) = getNullableLocalDate(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getLocalDate(key: String) =
+        getNullableLocalDate(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getYearMonth(key: String) = getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getYearMonth(key: String) =
+        getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun <T : Any> getObjectValue(key: String, decode: (Any) -> T): T = getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun <T : Any> getObjectValue(key: String, decode: (Any) -> T): T =
+        getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getMapValue(key: String): Map<String, Any> {
-        return getValue(key).takeIf { it is Map<*, *> }.let { try { it as Map<String, Any> } catch (e: TypeCastException) { throw IllegalArgumentException("Not a map value for key=$key") } }
+        return getValue(key).takeIf { it is Map<*, *> }.let {
+            try {
+                it as Map<String, Any>
+            } catch (e: TypeCastException) {
+                throw IllegalArgumentException("Not a map value for key=$key")
+            }
+        }
     }
 
     override fun toString(): String = "Packet(json=${toJson()})"
+
+    fun hasProblem(): Boolean {
+        return problem != null
+    }
+
+    fun addProblem(problem: Problem) {
+        this.problem = problem
+    }
+
+    fun getProblem(): Problem? {
+        return problem
+    }
 }

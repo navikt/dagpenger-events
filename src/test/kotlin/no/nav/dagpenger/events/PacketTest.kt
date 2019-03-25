@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
+import java.net.URI
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeParseException
@@ -193,12 +194,6 @@ class PacketTest {
         val packet2 = Packet(packet.toJson()!!)
         assertEquals(mapOf("key1" to "11222", "key2" to 124.0), packet2.getMapValue("map1"))
         assertEquals(mapOf("key1" to "11222", "key2" to false), packet2.getMapValue("map2"))
-
-//        assertEquals(false, packet.getBoolean("booleanValue2"))
-//        assertEquals(null, packet.getNullableBoolean("notExistiing"))
-//        assertThrows<IllegalArgumentException> { packet.getBoolean("notExistiing") }
-//        assertThrows<IllegalArgumentException> { packet.getNullableBoolean("notAnBoolean") }
-//        assertThrows<IllegalArgumentException> { packet.getBoolean("notAnBoolean") }
     }
 
     @Test
@@ -280,6 +275,55 @@ class PacketTest {
     }
 
     @Test
+    fun `Should be able to add problem `() {
+        val jsonString = """
+            {
+                "key1": "value1"
+            }
+        """.trimIndent()
+
+        val packet = Packet(jsonString)
+
+        packet.addProblem(Problem(title = "A problem"))
+        assertTrue(packet.hasProblem())
+    }
+
+    @Test
+    fun `Should be able serialize problems to json `() {
+        val jsonString = """
+            {
+                "key1": "value1"
+            }
+        """.trimIndent()
+
+        val packet = Packet(jsonString)
+
+        val problem = Problem(
+            type = URI.create("urn:error"),
+            title = "A problem",
+            status = 404,
+            detail = "An detailed error message",
+            instance = URI.create("urn:error:404")
+        )
+        packet.addProblem(problem)
+        val serializedPacket = Packet(packet.toJson()!!)
+        assertTrue(serializedPacket.hasProblem())
+        assertEquals(problem, packet.getProblem())
+    }
+
+    @Test
+    fun `Should contain no problems `() {
+        val jsonString = """
+            {
+                "key1": "value1"
+            }
+        """.trimIndent()
+
+        val packet = Packet(jsonString)
+        assertFalse(packet.hasProblem())
+    }
+
+    @Test
     fun `can put complex object`() {
         val jsonString = """
             {
@@ -306,7 +350,13 @@ class PacketTest {
         assertEquals(complex, snapshot.getNullableObjectValue("complex", adapter::fromJsonValue))
         assertEquals("qwe", snapshot.getNullableStringValue("anotherKey"))
         assertEquals(null, packet.getNullableObjectValue("notExisting", adapter::fromJsonValue))
-        assertThrows<IllegalArgumentException> { packet.getObjectValue("notExisting") { string -> adapter.fromJsonValue(string) ?: throw java.lang.IllegalArgumentException() } }
+        assertThrows<IllegalArgumentException> {
+            packet.getObjectValue("notExisting") { string ->
+                adapter.fromJsonValue(
+                    string
+                ) ?: throw java.lang.IllegalArgumentException()
+            }
+        }
     }
 
     data class ClassA(
