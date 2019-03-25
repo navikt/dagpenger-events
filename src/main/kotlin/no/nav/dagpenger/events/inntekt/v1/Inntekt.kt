@@ -3,7 +3,7 @@ package no.nav.dagpenger.events.inntekt.v1
 import java.lang.IllegalArgumentException
 import java.time.YearMonth
 
-class Inntekt(val inntektsId: String, private val inntektsListe: List<KlassifisertInntektMåned>) {
+class Inntekt(val inntektsId: String, val inntektsListe: List<KlassifisertInntektMåned>) {
 
     fun splitIntoInntektsPerioder(senesteMåned: YearMonth): InntektsPerioder {
         return Triple(
