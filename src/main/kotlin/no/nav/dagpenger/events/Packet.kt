@@ -29,36 +29,8 @@ class Packet constructor(jsonString: String) {
 
     private fun getValue(key: String): Any? = json[key]
 
-    fun putValue(key: String, value: BigDecimal) {
-        put(key, value.toPlainString())
-    }
-
-    fun putValue(key: String, value: Number) {
-        put(key, value)
-    }
-
-    fun putValue(key: String, value: String) {
-        put(key, value)
-    }
-
-    fun putValue(key: String, boolean: Boolean) {
-        put(key, boolean)
-    }
-
-    fun putValue(key: String, localDate: LocalDate) {
-        put(key, localDate)
-    }
-
-    fun putValue(key: String, yearMonth: YearMonth) {
-        put(key, yearMonth)
-    }
-
     fun putValue(key: String, thing: Any) {
         put(key, thing)
-    }
-
-    fun putValue(key: String, value: Map<String, Any>) {
-        put(key, value)
     }
 
     private fun put(key: String, value: Any) {
