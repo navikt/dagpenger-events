@@ -53,8 +53,8 @@ class Packet constructor(jsonString: String) {
         put(key, yearMonth)
     }
 
-    fun <T> putValue(key: String, thing: T, serialize: (T) -> String) {
-        put(key, serialize(thing))
+    fun putValue(key: String, thing: Any) {
+        put(key, thing)
     }
 
     fun putValue(key: String, value: Map<String, Any>) {
@@ -84,8 +84,8 @@ class Packet constructor(jsonString: String) {
 
     fun getNullableYearMonth(key: String): YearMonth? = getValue(key)?.let { YearMonth.parse(it.toString()) }
 
-    fun <T> getNullableObjectValue(key: String, deserialize: (String) -> T): T? =
-        getNullableStringValue(key)?.let { deserialize(it) }
+    fun <T> getNullableObjectValue(key: String, decode: (Any) -> T): T? =
+        getValue(key)?.let(decode)
 
     fun getNullableBoolean(key: String): Boolean? {
         val v: Any? = getValue(key)
@@ -109,7 +109,7 @@ class Packet constructor(jsonString: String) {
 
     fun getYearMonth(key: String) = getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun <T : Any> getObjectValue(key: String, deserialize: (String) -> T): T = getNullableObjectValue(key, deserialize) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun <T : Any> getObjectValue(key: String, decode: (Any) -> T): T = getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
 

@@ -299,16 +299,14 @@ class PacketTest {
         )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 
-        packet.putValue("complex", complex, adapter::toJson)
-
-        assertEquals(complex, packet.getNullableObjectValue("complex", adapter::fromJson))
+        packet.putValue("complex", adapter.toJsonValue(complex)!!)
+        assertEquals(complex, packet.getNullableObjectValue("complex", adapter::fromJsonValue))
 
         val snapshot = Packet(packet.toJson()!!)
-        println(packet.toJson())
-        assertEquals(complex, snapshot.getNullableObjectValue("complex", adapter::fromJson))
+        assertEquals(complex, snapshot.getNullableObjectValue("complex", adapter::fromJsonValue))
         assertEquals("qwe", snapshot.getNullableStringValue("anotherKey"))
-        assertEquals(null, packet.getNullableObjectValue("notExisting", adapter::fromJson))
-        assertThrows<IllegalArgumentException> { packet.getObjectValue("notExisting") { string -> adapter.fromJson(string) ?: throw java.lang.IllegalArgumentException() } }
+        assertEquals(null, packet.getNullableObjectValue("notExisting", adapter::fromJsonValue))
+        assertThrows<IllegalArgumentException> { packet.getObjectValue("notExisting") { string -> adapter.fromJsonValue(string) ?: throw java.lang.IllegalArgumentException() } }
     }
 
     data class ClassA(
