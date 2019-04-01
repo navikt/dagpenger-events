@@ -26,7 +26,7 @@ tasks.withType<KotlinCompile> {
 }
 
 group = "no.nav.dagpenger"
-version = "0.3.6-SNAPSHOT"
+version = "0.3.7-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,9 +39,14 @@ val moshiVersion = "1.8.0"
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    implementation("com.squareup.moshi:moshi:$moshiVersion")
+    implementation(kotlin("reflect"))
+
+    api("com.squareup.moshi:moshi-adapters:$moshiVersion")
+    api("com.squareup.moshi:moshi-kotlin:$moshiVersion") {
+        exclude(module = "kotlin-stdlib") // Brings in Kotlin 1.2.71
+        exclude(module = "kotlin-reflect") // Brings in Kotlin 1.2.71 - https://github.com/square/moshi/pull/825 fixes this when released
+    }
+    api("com.squareup.moshi:moshi:$moshiVersion")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
