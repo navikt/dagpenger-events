@@ -7,9 +7,6 @@ plugins {
     id("com.commercehub.gradle.plugin.avro") version "0.14.2"
     id("com.palantir.git-version") version "0.11.0"
     id("maven-publish")
-    id("signing")
-    id("io.codearte.nexus-staging") version "0.20.0"
-    id("de.marcphilipp.nexus-publish") version "0.1.1"
 }
 
 apply {
@@ -111,23 +108,6 @@ publishing {
         }
     }
 }
-
-ext["signing.gnupg.keyName"] = System.getenv("GPG_KEY_NAME")
-ext["signing.gnupg.passphrase"] = System.getenv("GPG_PASSPHRASE")
-ext["signing.gnupg.useLegacyGpg"] = true
-
-signing {
-    useGpgCmd()
-    sign(publishing.publications["mavenJava"])
-}
-
-nexusStaging {
-    username = System.getenv("OSSRH_JIRA_USERNAME")
-    password = System.getenv("OSSRH_JIRA_PASSWORD")
-    packageGroup = "no.nav"
-    stagingProfileId = "3a10cafa813c47"
-}
-
 spotless {
     kotlin {
         ktlint()
