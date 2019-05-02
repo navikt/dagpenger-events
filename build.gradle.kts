@@ -61,6 +61,10 @@ val sourcesJar by tasks.registering(Jar::class) {
     from(sourceSets["main"].allSource)
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 publishing {
     publications {
         create("mavenJava", MavenPublication::class.java) {
