@@ -12,9 +12,15 @@ import java.net.URI
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeParseException
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class PacketTest {
+    @Test
+    fun `create packet from default JSON string`() {
+        assertNotNull(Packet())
+    }
+
     @Test
     fun `create packet with JSON`() {
         val jsonString = """
@@ -335,11 +341,11 @@ class PacketTest {
         val packet = Packet(jsonString)
         val complex = ClassA(
             "id", listOf(
-                ClassB(
-                    YearMonth.of(2019, 2),
-                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
-                )
+            ClassB(
+                YearMonth.of(2019, 2),
+                listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
             )
+        )
         )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 

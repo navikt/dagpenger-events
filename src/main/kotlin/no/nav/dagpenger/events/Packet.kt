@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
 
-class Packet constructor(jsonString: String) {
+class Packet constructor(jsonString: String = "{}") {
 
     companion object {
         internal const val READ_COUNT = "system_read_count"
