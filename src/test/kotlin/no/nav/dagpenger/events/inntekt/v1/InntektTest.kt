@@ -31,7 +31,7 @@ class InntektTest {
 
     @Test
     fun `filtering period of last three months affects sum of inntekt`() {
-        val filteredInntekt = testInntekt.filterPeriod(YearMonth.now().minusMonths(3), YearMonth.now().minusMonths(1))
+        val filteredInntekt = testInntekt.filterPeriod(senesteMåned.minusMonths(2), senesteMåned.minusMonths(0))
         assertEquals(
             BigDecimal(9000),
             filteredInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
@@ -44,7 +44,7 @@ class InntektTest {
 
     @Test
     fun `filtering period not overlapping exisiting months does not affect sum `() {
-        val filteredInntekt = testInntekt.filterPeriod(YearMonth.now().minusMonths(48), YearMonth.now().minusMonths(37))
+        val filteredInntekt = testInntekt.filterPeriod(senesteMåned.minusMonths(48), senesteMåned.minusMonths(37))
         assertEquals(
             testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT)),
             filteredInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
@@ -68,11 +68,9 @@ class InntektTest {
     @Test
     fun `inntektsPerioder splits up inntekt correctly`() {
 
-        val senesteMåned = YearMonth.of(2019, 3)
-
         val inntekts_up_to_march_2019 = Inntekt("id", inntektsListe = (0..36).toList().map {
             KlassifisertInntektMåned(
-                YearMonth.now().minusMonths(it.toLong()),
+                senesteMåned.minusMonths(it.toLong()),
                 listOf(
                     KlassifisertInntekt(
                         BigDecimal(1000),
