@@ -16,7 +16,7 @@ data class Problem(
                 json["title"] as String,
                 json["status"]?.toString()?.toDouble()?.toInt(),
                 json["detail"] as String?,
-                URI.create(json["type"] as String)
+                URI.create(json["instance"] as String)
             )
         }
     }
