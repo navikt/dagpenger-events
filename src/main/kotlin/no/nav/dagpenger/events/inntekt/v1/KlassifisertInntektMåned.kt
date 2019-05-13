@@ -5,12 +5,13 @@ import java.time.YearMonth
 
 data class KlassifisertInntektMåned(
     val årMåned: YearMonth,
-    val klassifiserteInntekter: List<KlassifisertInntekt>
+    val klassifiserteInntekter: List<KlassifisertInntekt>,
+    val harAvvik: Boolean? = null
 )
 
 fun Collection<KlassifisertInntektMåned>.sumInntekt(inntektsKlasserToSum: List<InntektKlasse>) =
-    this.flatMap {
-        it.klassifiserteInntekter
+    this.flatMap { klassifisertInntektMåned ->
+        klassifisertInntektMåned.klassifiserteInntekter
             .filter { it.inntektKlasse in inntektsKlasserToSum }
             .map { it.beløp }
     }.fold(BigDecimal.ZERO, BigDecimal::add)
