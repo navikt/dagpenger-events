@@ -1,6 +1,8 @@
 package no.nav.dagpenger.events
 
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.Types
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,11 +14,13 @@ class Packet constructor(jsonString: String = "{}") {
         internal const val READ_COUNT = "system_read_count"
         internal const val STARTED = "system_started"
         internal const val PROBLEM = "system_problem"
+        internal const val BREADCRUMBS = "system_breadcrumbs"
 
         private val adapter = moshiInstance.adapter<MutableMap<String, Any?>>(MutableMap::class.java).lenient()
     }
 
     private var problem: Problem? = null
+    private var breadcrumbs: MutableList<Breadcrumb>
     private val json: MutableMap<String, Any?> =
         adapter.fromJson(jsonString) ?: throw JsonDataException("Could not parse JSON: $jsonString")
 
@@ -30,6 +34,17 @@ class Packet constructor(jsonString: String = "{}") {
         json[READ_COUNT] = (json[READ_COUNT] as Double).toInt() + 1
         if (json.containsKey(PROBLEM)) {
             problem = Problem.fromJson(this.getMapValue(PROBLEM))
+        }
+
+        val breadcrumbslistType = Types.newParameterizedType(List::class.java, Breadcrumb::class.java)
+        val breadcrumbsAdapter: JsonAdapter<MutableList<Breadcrumb>> = moshiInstance.adapter(breadcrumbslistType)
+        breadcrumbs = breadcrumbsAdapter.fromJsonValue(json[BREADCRUMBS]) ?: mutableListOf()
+
+        System.getenv("NAIS_APP_NAME")?.let {
+            val breadcrumb = Breadcrumb(
+                it,
+                LocalDateTime.now())
+            breadcrumbs.add(breadcrumb)
         }
     }
 
@@ -46,6 +61,7 @@ class Packet constructor(jsonString: String = "{}") {
 
     fun toJson(): String? {
         json[PROBLEM] = problem
+        json[BREADCRUMBS] = breadcrumbs
         return adapter.toJson(json)
     }
 
@@ -122,5 +138,13 @@ class Packet constructor(jsonString: String = "{}") {
 
     fun getProblem(): Problem? {
         return problem
+    }
+
+    fun getBreadcrumbs(): List<Breadcrumb> {
+        return breadcrumbs
+    }
+
+    fun getReadCount(): Int {
+        return (json[READ_COUNT] as Double).toInt()
     }
 }
