@@ -80,7 +80,9 @@ class PacketTest {
             }
         """.trimIndent()
 
-        assertEquals(6, JSONObject(Packet(jsonString).toJson()).getInt("system_read_count"))
+        val packet = Packet(jsonString)
+
+        assertEquals(6, packet.getReadCount())
     }
 
     @Test

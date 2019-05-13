@@ -145,6 +145,6 @@ class Packet constructor(jsonString: String = "{}") {
     }
 
     fun getReadCount(): Int {
-        return json[READ_COUNT] as Int
+        return getIntValue(READ_COUNT)
     }
 }
