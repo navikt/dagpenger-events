@@ -20,6 +20,7 @@ apply {
 
 repositories {
     jcenter()
+    maven("https://jitpack.io")
     maven("http://packages.confluent.io/maven/")
 }
 
@@ -27,8 +28,8 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-group = "no.nav.dagpenger"
-version = "0.3.12-SNAPSHOT"
+group = "com.github.navikt"
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -108,37 +109,8 @@ publishing {
         }
     }
 
-    repositories {
-        maven {
-            credentials {
-                username = System.getenv("OSSRH_JIRA_USERNAME")
-                password = System.getenv("OSSRH_JIRA_PASSWORD")
-            }
-            val version = project.version as String
-            url = if (version.endsWith("-SNAPSHOT")) {
-                uri("https://oss.sonatype.org/content/repositories/snapshots")
-            } else {
-                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            }
-        }
-    }
 }
 
-ext["signing.gnupg.keyName"] = System.getenv("GPG_KEY_NAME")
-ext["signing.gnupg.passphrase"] = System.getenv("GPG_PASSPHRASE")
-ext["signing.gnupg.useLegacyGpg"] = true
-
-signing {
-    useGpgCmd()
-    sign(publishing.publications["mavenJava"])
-}
-
-nexusStaging {
-    username = System.getenv("OSSRH_JIRA_USERNAME")
-    password = System.getenv("OSSRH_JIRA_PASSWORD")
-    packageGroup = "no.nav"
-    stagingProfileId = "3a10cafa813c47"
-}
 
 spotless {
     kotlin {
