@@ -108,9 +108,7 @@ publishing {
             }
         }
     }
-
 }
-
 
 spotless {
     kotlin {
