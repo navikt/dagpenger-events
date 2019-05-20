@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/navikt/dagpenger-events.svg?branch=master)](https://travis-ci.org/navikt/dagpenger-events)
+
+[![CircleCI](https://circleci.com/gh/navikt/dagpenger-events.svg?style=svg)](https://circleci.com/gh/navikt/dagpenger-events)
+
+[![](https://jitpack.io/v/navikt/dagpenger-events.svg)](https://jitpack.io/#navikt/dagpenger-events)
 
 # Event repository
 
