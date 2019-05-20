@@ -28,7 +28,7 @@ tasks.withType<KotlinCompile> {
 }
 
 group = "no.nav.dagpenger"
-version = "0.3.11-SNAPSHOT"
+version = "0.3.12-SNAPSHOT"
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -55,7 +55,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$jupiterVersion")
     testImplementation("org.json:json:$orgJsonVersion")
-    api("org.apache.avro:avro:$avroVersion")
+    implementation("org.apache.avro:avro:$avroVersion")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
