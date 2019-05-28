@@ -25,7 +25,7 @@ class KlassifisertInntektMånedTest {
         )
     }
 
-    val testInntekt = Inntekt("id", testInntektsListe)
+    val testInntekt = Inntekt("id", testInntektsListe, sisteAvsluttendeKalenderMåned = senesteMåned)
 
     @Test
     fun `sum with empty list of inntektsklasserToSum returns 0`() {
@@ -41,12 +41,12 @@ class KlassifisertInntektMånedTest {
     fun ` should sum arbeidsinntekt correctly`() {
         assertEquals(
             BigDecimal(12000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
+            testInntekt.splitIntoInntektsPerioder().first.sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
         )
 
         assertEquals(
             BigDecimal(36000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
+            testInntekt.splitIntoInntektsPerioder().all().sumInntekt(listOf(InntektKlasse.ARBEIDSINNTEKT))
         )
     }
 
@@ -54,12 +54,12 @@ class KlassifisertInntektMånedTest {
     fun ` should sum dp fangst fiske correctly `() {
         assertEquals(
             BigDecimal(24000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
+            testInntekt.splitIntoInntektsPerioder().first.sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
         )
 
         assertEquals(
             BigDecimal(72000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
+            testInntekt.splitIntoInntektsPerioder().all().sumInntekt(listOf(InntektKlasse.DAGPENGER_FANGST_FISKE))
         )
     }
 
@@ -67,7 +67,7 @@ class KlassifisertInntektMånedTest {
     fun ` should sum multiple inntektsklasser`() {
         assertEquals(
             BigDecimal(36000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).first.sumInntekt(
+            testInntekt.splitIntoInntektsPerioder().first.sumInntekt(
                 listOf(
                     InntektKlasse.DAGPENGER_FANGST_FISKE,
                     InntektKlasse.ARBEIDSINNTEKT
@@ -77,7 +77,7 @@ class KlassifisertInntektMånedTest {
 
         assertEquals(
             BigDecimal(108000),
-            testInntekt.splitIntoInntektsPerioder(senesteMåned).all().sumInntekt(
+            testInntekt.splitIntoInntektsPerioder().all().sumInntekt(
                 listOf(
                     InntektKlasse.DAGPENGER_FANGST_FISKE,
                     InntektKlasse.ARBEIDSINNTEKT

@@ -1,31 +1,34 @@
 package no.nav.dagpenger.events.inntekt.v1
 
-import java.lang.IllegalArgumentException
 import java.time.YearMonth
 
 class Inntekt(
     val inntektsId: String,
     val inntektsListe: List<KlassifisertInntektMåned>,
-    val manueltRedigert: Boolean? = false
+    val manueltRedigert: Boolean? = false,
+    val sisteAvsluttendeKalenderMåned: YearMonth
 ) {
 
-    fun splitIntoInntektsPerioder(senesteMåned: YearMonth): InntektsPerioder {
+    fun splitIntoInntektsPerioder(): InntektsPerioder {
         return Triple(
             (0L..11L).map { i ->
-                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
-                    senesteMåned.minusMonths(i),
+                inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
+                    ?: KlassifisertInntektMåned(
+                        sisteAvsluttendeKalenderMåned.minusMonths(i),
                     emptyList()
                 )
             }.sortedBy { it.årMåned },
             (12L..23L).map { i ->
-                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
-                    senesteMåned.minusMonths(i),
+                inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
+                    ?: KlassifisertInntektMåned(
+                        sisteAvsluttendeKalenderMåned.minusMonths(i),
                     emptyList()
                 )
             }.sortedBy { it.årMåned },
             (24L..35L).map { i ->
-                inntektsListe.find { it.årMåned == senesteMåned.minusMonths(i) } ?: KlassifisertInntektMåned(
-                    senesteMåned.minusMonths(i),
+                inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
+                    ?: KlassifisertInntektMåned(
+                        sisteAvsluttendeKalenderMåned.minusMonths(i),
                     emptyList()
                 )
             }.sortedBy { it.årMåned }
@@ -34,6 +37,10 @@ class Inntekt(
 
     fun filterPeriod(from: YearMonth, to: YearMonth): Inntekt {
         if (from.isAfter(to)) throw IllegalArgumentException("Argument from=$from is after argument to=$to")
-        return Inntekt(inntektsId, inntektsListe.filter { it.årMåned !in from..to })
+        return Inntekt(
+            inntektsId,
+            inntektsListe.filter { it.årMåned !in from..to },
+            sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned
+        )
     }
 }
