@@ -10,6 +10,8 @@ data class Problem(
     val instance: URI = URI.create("about:blank")
 ) {
     companion object {
+        private val adapter = moshiInstance.adapter<Problem>(Problem::class.java)
+
         fun fromJson(json: Map<String, Any>): Problem {
             return Problem(
                 URI.create(json["type"] as String),
@@ -20,4 +22,6 @@ data class Problem(
             )
         }
     }
+
+    val toJson: String? get() = adapter.toJson(this)
 }
