@@ -367,6 +367,17 @@ class PacketTest {
         }
     }
 
+    @Test
+    fun `toString should hide non system Packet values`() {
+        val packetString = Packet().apply {
+            putValue(Packet.PROBLEM, "problemValue")
+            putValue("secret", "secretValue")
+        }.toString()
+
+        assertFalse(packetString.contains("secretValue"))
+        assertFalse(packetString.contains("problemValue"))
+    }
+
     data class ClassA(
         val id: String,
         val list: List<ClassB>

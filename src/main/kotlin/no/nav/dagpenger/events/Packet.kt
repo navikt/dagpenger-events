@@ -16,13 +16,13 @@ class Packet constructor(jsonString: String = "{}") {
         internal const val PROBLEM = "system_problem"
         internal const val BREADCRUMBS = "system_breadcrumbs"
 
-        private val adapter = moshiInstance.adapter<MutableMap<String, Any?>>(MutableMap::class.java).lenient()
+        private val adapter = moshiInstance.adapter<Map<String, Any?>>(Map::class.java).lenient()
     }
 
     private var problem: Problem? = null
     private var breadcrumbs: MutableList<Breadcrumb>
     private val json: MutableMap<String, Any?> =
-        adapter.fromJson(jsonString) ?: throw JsonDataException("Could not parse JSON: $jsonString")
+        adapter.fromJson(jsonString)?.toMutableMap() ?: throw JsonDataException("Could not parse JSON: $jsonString")
 
     init {
         if (!json.containsKey(READ_COUNT)) {
@@ -59,11 +59,19 @@ class Packet constructor(jsonString: String = "{}") {
         json[key] = value
     }
 
-    fun toJson(): String? {
-        json[PROBLEM] = problem
-        json[BREADCRUMBS] = breadcrumbs
-        return adapter.toJson(json)
+    private fun mergeMembersJsonMap() = json.toMutableMap().apply {
+        this[PROBLEM] = problem
+        this[BREADCRUMBS] = breadcrumbs
     }
+
+    fun toJson(): String? = mergeMembersJsonMap().run(adapter::toJson)
+
+    override fun toString(): String = mergeMembersJsonMap().mapValues { entry ->
+        when {
+            entry.key.startsWith("system") -> entry.value
+            else -> "<REDACTED>"
+        }
+    }.run(adapter::toJson)
 
     fun hasField(key: String): Boolean = json.containsKey(key)
 
@@ -125,8 +133,6 @@ class Packet constructor(jsonString: String = "{}") {
             }
         }
     }
-
-    override fun toString(): String = "Packet(json=${toJson()})"
 
     fun hasProblem(): Boolean {
         return problem != null
