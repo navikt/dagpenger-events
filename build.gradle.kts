@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("java-library")
     kotlin("jvm") version Kotlin.version
-    id("com.commercehub.gradle.plugin.avro") version "0.17.0"
+    id("com.commercehub.gradle.plugin.avro") version "0.16.0"
     id(Spotless.spotless) version Spotless.version
     id("maven-publish")
 }
