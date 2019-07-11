@@ -4,24 +4,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-library")
-    kotlin("jvm") version "1.3.21"
-    id("com.diffplug.gradle.spotless") version "3.13.0"
-    id("com.commercehub.gradle.plugin.avro") version "0.14.2"
-    id("com.palantir.git-version") version "0.11.0"
+    kotlin("jvm") version Kotlin.version
+    id("com.commercehub.gradle.plugin.avro") version "0.17.0"
+    id(Spotless.spotless) version Spotless.version
     id("maven-publish")
-    id("signing")
-    id("io.codearte.nexus-staging") version "0.20.0"
-    id("de.marcphilipp.nexus-publish") version "0.1.1"
-}
-
-apply {
-    plugin("com.diffplug.gradle.spotless")
 }
 
 repositories {
     jcenter()
-    maven("https://jitpack.io")
     maven("http://packages.confluent.io/maven/")
+    maven("https://jitpack.io")
 }
 
 tasks.withType<KotlinCompile> {
@@ -35,32 +27,26 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-val avroVersion = "1.8.2"
-val orgJsonVersion = "20180813"
-val jupiterVersion = "5.3.2"
-val moshiVersion = "1.8.0"
-
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
-    implementation("com.squareup.moshi:moshi:$moshiVersion")
-    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion") {
+    implementation(Avro.avro)
+
+    implementation(Moshi.moshi)
+    implementation(Moshi.moshiAdapters)
+    implementation(Moshi.moshiKotlin) {
         exclude(module = "kotlin-stdlib") // Brings in Kotlin 1.2.71
         exclude(module = "kotlin-reflect") // Brings in Kotlin 1.2.71 - https://github.com/square/moshi/pull/825 fixes this when released
     }
-    testImplementation(kotlin("test"))
-    testImplementation(kotlin("test-junit"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$jupiterVersion")
-    testImplementation("org.json:json:$orgJsonVersion")
-    implementation("org.apache.avro:avro:$avroVersion")
+    testImplementation(kotlin("test-junit5"))
+    testImplementation(Junit5.api)
+    testImplementation(Junit5.kotlinRunner)
+    testImplementation(Json.library)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
 
@@ -112,10 +98,10 @@ publishing {
 
 spotless {
     kotlin {
-        ktlint("0.31.0")
+        ktlint(Klint.version)
     }
     kotlinGradle {
         target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-        ktlint("0.31.0")
+        ktlint(Klint.version)
     }
 }
