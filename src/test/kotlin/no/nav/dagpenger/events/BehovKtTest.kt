@@ -5,7 +5,7 @@ import no.nav.dagpenger.events.avro.Behov
 import no.nav.dagpenger.events.avro.Ettersending
 import no.nav.dagpenger.events.avro.Søknad
 import no.nav.dagpenger.events.avro.Vedtakstype
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertTrue
 
