@@ -33,6 +33,8 @@ dependencies {
 
     implementation(Avro.avro)
 
+    implementation(Ulid.ulid)
+
     implementation(Moshi.moshi)
     implementation(Moshi.moshiAdapters)
     implementation(Moshi.moshiKotlin) {
