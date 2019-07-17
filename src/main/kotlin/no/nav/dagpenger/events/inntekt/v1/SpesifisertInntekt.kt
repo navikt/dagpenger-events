@@ -9,7 +9,7 @@ import de.huxhorn.sulky.ulid.ULID
 
 data class SpesifisertInntekt(
     val inntektId: InntektId?,
-    val arbeidsInntektMåned: List<MånedsInntekt>?,
+    val månedsInntekter: List<MånedsInntekt>?,
     val ident: Aktør,
     val manueltRedigert: Boolean,
     val timestamp: LocalDateTime?
@@ -18,7 +18,7 @@ data class SpesifisertInntekt(
 data class MånedsInntekt(
     val årMåned: YearMonth,
     val avvikListe: List<Avvik>?,
-    val inntektListe: List<Postering>?
+    val posteringer: List<Postering>?
 )
 
 data class Postering(
