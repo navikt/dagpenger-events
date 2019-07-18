@@ -41,7 +41,7 @@ data class Postering(
     val utløserArbeidsgiveravgift: Boolean? = null,
     val informasjonsstatus: String? = null,
     val inntektType: InntektType,
-    val tilleggsinformasjon: TilleggInformasjon? = null,
+    val tilleggsinformasjon: TilleggsInformasjon? = null,
     val posteringsType: PosteringsType
 )
 
@@ -81,12 +81,12 @@ data class Avvik(
     val tekst: String
 )
 
-data class TilleggInformasjon(
+data class TilleggsInformasjon(
     val kategori: String,
-    val tilleggsinformasjonDetaljer: TilleggInformasjonsDetaljer?
+    val tilleggsinformasjonDetaljer: TilleggsInformasjonDetaljer?
 )
 
-data class TilleggInformasjonsDetaljer(
+data class TilleggsInformasjonDetaljer(
     val detaljerType: String?,
     val spesielleInntjeningsforhold: SpesielleInntjeningsforhold?
 )
