@@ -8,17 +8,17 @@ import java.time.YearMonth
 import de.huxhorn.sulky.ulid.ULID
 
 data class SpesifisertInntekt(
-    val inntektId: InntektId?,
-    val månedsInntekter: List<MånedsInntekt>?,
+    val inntektId: InntektId,
+    val månedsInntekter: List<MånedsInntekt>,
     val ident: Aktør,
     val manueltRedigert: Boolean,
-    val timestamp: LocalDateTime?
+    val timestamp: LocalDateTime
 )
 
 data class MånedsInntekt(
     val årMåned: YearMonth,
-    val avvikListe: List<Avvik>?,
-    val posteringer: List<Postering>?
+    val avvikListe: List<Avvik>,
+    val posteringer: List<Postering>
 )
 
 data class Postering(
@@ -82,7 +82,7 @@ data class Avvik(
 )
 
 data class TilleggInformasjon(
-    val kategori: String?,
+    val kategori: String,
     val tilleggsinformasjonDetaljer: TilleggInformasjonsDetaljer?
 )
 
