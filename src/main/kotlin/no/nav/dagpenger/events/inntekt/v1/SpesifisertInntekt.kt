@@ -23,11 +23,11 @@ data class MånedsInntekt(
 
 data class Postering(
     val beløp: BigDecimal,
-    val fordel: String?,
-    val beskrivelse: InntektBeskrivelse?,
+    val fordel: String,
+    val beskrivelse: InntektBeskrivelse,
     val inntektskilde: String,
-    val inntektsstatus: String?,
-    val inntektsperiodetype: String?,
+    val inntektsstatus: String,
+    val inntektsperiodetype: String,
     val leveringstidspunkt: YearMonth? = null,
     val opptjeningsland: String? = null,
     val opptjeningsperiode: Periode? = null,
@@ -40,7 +40,7 @@ data class Postering(
     val inngårIGrunnlagForTrekk: Boolean? = null,
     val utløserArbeidsgiveravgift: Boolean? = null,
     val informasjonsstatus: String? = null,
-    val inntektType: InntektType?,
+    val inntektType: InntektType,
     val tilleggsinformasjon: TilleggInformasjon? = null,
     val posteringsType: PosteringsType
 )
