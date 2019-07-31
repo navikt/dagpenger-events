@@ -16,6 +16,7 @@ data class SpesifisertInntekt(
 )
 
 data class Avvik(
+    val årmåned: YearMonth,
     val ident: Aktør,
     val opplysningspliktig: Aktør,
     val virksomhet: Aktør?,
@@ -24,6 +25,7 @@ data class Avvik(
 )
 
 data class Postering(
+    val årmåned: YearMonth,
     val beløp: BigDecimal,
     val fordel: String,
     val inntektskilde: String,
