@@ -8,16 +8,19 @@ import java.time.YearMonth
 
 data class SpesifisertInntekt(
     val inntektId: InntektId,
-    val månedsInntekter: List<MånedsInntekt>,
+    val avvik: List<Avvik>,
+    val posteringer: List<Postering>,
     val ident: Aktør,
     val manueltRedigert: Boolean,
     val timestamp: LocalDateTime
 )
 
-data class MånedsInntekt(
-    val årMåned: YearMonth,
-    val avvikListe: List<Avvik>,
-    val posteringer: List<Postering>
+data class Avvik(
+    val ident: Aktør,
+    val opplysningspliktig: Aktør,
+    val virksomhet: Aktør?,
+    val avvikPeriode: YearMonth,
+    val tekst: String
 )
 
 data class Postering(
@@ -66,13 +69,5 @@ enum class AktørType {
     NATURLIG_IDENT,
     ORGANISASJON
 }
-
-data class Avvik(
-    val ident: Aktør,
-    val opplysningspliktig: Aktør,
-    val virksomhet: Aktør?,
-    val avvikPeriode: YearMonth,
-    val tekst: String
-)
 
 class IllegalInntektIdException(override val message: String, override val cause: Throwable?) : java.lang.RuntimeException(message, cause)
