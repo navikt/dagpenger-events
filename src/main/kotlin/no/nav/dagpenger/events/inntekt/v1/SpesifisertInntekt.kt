@@ -10,6 +10,7 @@ data class SpesifisertInntekt(
     val inntektId: InntektId,
     val avvik: List<Avvik>,
     val posteringer: List<Postering>,
+    val sisteAvsluttendeKalenderMåned: YearMonth,
     val ident: Aktør,
     val manueltRedigert: Boolean,
     val timestamp: LocalDateTime
