@@ -19,7 +19,7 @@ data class SpesifisertInntekt(
 data class Avvik(
     val ident: Aktør,
     val opplysningspliktig: Aktør,
-    val virksomhet: Aktør?,
+    val virksomhet: Aktør? = null,
     val avvikPeriode: YearMonth,
     val tekst: String
 )
