@@ -45,6 +45,7 @@ dependencies {
     testImplementation(Junit5.api)
     testImplementation(Junit5.kotlinRunner)
     testImplementation(Json.library)
+    testRuntimeOnly(Junit5.engine)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
