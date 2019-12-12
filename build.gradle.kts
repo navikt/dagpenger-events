@@ -53,6 +53,10 @@ val sourcesJar by tasks.registering(Jar::class) {
     from(sourceSets["main"].allSource)
 }
 
+tasks.named("compileKotlin") {
+    dependsOn("spotlessCheck")
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {

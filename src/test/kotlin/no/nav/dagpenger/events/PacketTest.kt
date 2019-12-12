@@ -386,7 +386,7 @@ class PacketTest {
     }
 
     @Test
-    fun `system-correlation-id should be preserved on serialization and deserialization`(){
+    fun `system-correlation-id should be preserved on serialization and deserialization`() {
         val packet = Packet()
         Packet(packet.toJson()!!).getCorrelationId() shouldBe packet.getCorrelationId()
     }

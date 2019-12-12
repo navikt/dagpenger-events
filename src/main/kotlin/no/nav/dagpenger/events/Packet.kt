@@ -19,7 +19,7 @@ class Packet constructor(jsonString: String = "{}") {
         internal const val BREADCRUMBS = "system_breadcrumbs"
 
         private val adapter = moshiInstance.adapter<Map<String, Any?>>(Map::class.java).lenient()
-        private val ulidGen =  ULID()
+        private val ulidGen = ULID()
     }
 
     private var problem: Problem? = null
@@ -133,7 +133,8 @@ class Packet constructor(jsonString: String = "{}") {
     fun getMapValue(key: String): Map<String, Any> {
         return getValue(key).takeIf { it is Map<*, *> }.let {
             try {
-                it as Map<String, Any>
+                it as Ma
+                p<String, Any>
             } catch (e: TypeCastException) {
                 throw IllegalArgumentException("Not a map value for key=$key")
             }
@@ -153,5 +154,4 @@ class Packet constructor(jsonString: String = "{}") {
     fun getBreadcrumbs(): List<Breadcrumb> = breadcrumbs
 
     fun getReadCount(): Int = getIntValue(READ_COUNT)
-
 }
