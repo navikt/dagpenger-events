@@ -129,7 +129,7 @@ class Packet constructor(jsonString: String = "{}") {
         getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
-    
+
     fun getMapValue(key: String): Map<String, Any> {
         return getValue(key).takeIf { it is Map<*, *> }.let {
             try {
