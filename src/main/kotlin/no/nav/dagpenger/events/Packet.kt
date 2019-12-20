@@ -3,6 +3,7 @@ package no.nav.dagpenger.events
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Types
+import de.huxhorn.sulky.ulid.ULID
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,11 +13,13 @@ class Packet constructor(jsonString: String = "{}") {
 
     companion object {
         internal const val READ_COUNT = "system_read_count"
+        internal const val CORRELATION_ID = "system_correlation_id"
         internal const val STARTED = "system_started"
         internal const val PROBLEM = "system_problem"
         internal const val BREADCRUMBS = "system_breadcrumbs"
 
         private val adapter = moshiInstance.adapter<Map<String, Any?>>(Map::class.java).lenient()
+        private val ulidGen = ULID()
     }
 
     private var problem: Problem? = null
@@ -30,6 +33,9 @@ class Packet constructor(jsonString: String = "{}") {
         }
         if (!json.containsKey(STARTED)) {
             json[STARTED] = LocalDateTime.now()
+        }
+        if (!json.containsKey(CORRELATION_ID)) {
+            json[CORRELATION_ID] = ulidGen.nextULID()
         }
         json[READ_COUNT] = (json[READ_COUNT] as Double).toInt() + 1
         if (json.containsKey(PROBLEM)) {
@@ -134,23 +140,17 @@ class Packet constructor(jsonString: String = "{}") {
         }
     }
 
-    fun hasProblem(): Boolean {
-        return problem != null
-    }
+    fun getCorrelationId(): String = getStringValue(CORRELATION_ID)
+
+    fun hasProblem(): Boolean = problem != null
 
     fun addProblem(problem: Problem) {
         this.problem = problem
     }
 
-    fun getProblem(): Problem? {
-        return problem
-    }
+    fun getProblem(): Problem? = problem
 
-    fun getBreadcrumbs(): List<Breadcrumb> {
-        return breadcrumbs
-    }
+    fun getBreadcrumbs(): List<Breadcrumb> = breadcrumbs
 
-    fun getReadCount(): Int {
-        return getIntValue(READ_COUNT)
-    }
+    fun getReadCount(): Int = getIntValue(READ_COUNT)
 }

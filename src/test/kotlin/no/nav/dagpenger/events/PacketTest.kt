@@ -1,6 +1,7 @@
 package no.nav.dagpenger.events
 
 import com.squareup.moshi.JsonEncodingException
+import io.kotlintest.shouldBe
 import org.json.JSONObject
 
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -376,6 +377,18 @@ class PacketTest {
 
         assertFalse(packetString.contains("secretValue"))
         assertFalse(packetString.contains("problemValue"))
+    }
+
+    @Test
+    fun `Packet should have system-correlation-id`() {
+        val packet = Packet()
+        packet.hasField("system_correlation_id") shouldBe true
+    }
+
+    @Test
+    fun `system-correlation-id should be preserved on serialization and deserialization`() {
+        val packet = Packet()
+        Packet(packet.toJson()!!).getCorrelationId() shouldBe packet.getCorrelationId()
     }
 
     data class ClassA(
