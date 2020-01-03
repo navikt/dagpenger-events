@@ -3,7 +3,6 @@ package no.nav.dagpenger.events
 import com.squareup.moshi.JsonEncodingException
 import io.kotlintest.shouldBe
 import org.json.JSONObject
-
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
@@ -389,6 +388,13 @@ class PacketTest {
     fun `system-correlation-id should be preserved on serialization and deserialization`() {
         val packet = Packet()
         Packet(packet.toJson()!!).getCorrelationId() shouldBe packet.getCorrelationId()
+    }
+
+    @Test
+    fun `Initialization of Packet should increment summary count`() {
+        packetPayloadByteSize.clear()
+        val packet = Packet()
+        packetPayloadByteSize.get().count shouldBe 1.0
     }
 
     data class ClassA(
