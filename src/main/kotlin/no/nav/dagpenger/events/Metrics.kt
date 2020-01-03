@@ -2,6 +2,6 @@ package no.nav.dagpenger.events
 
 import io.prometheus.client.Summary
 
-val packetByteSize = Summary.build()
-    .name("packet_size_bytes")
-    .help("Packet size in bytes.").register()
+val packetPayloadByteSize = Summary.build()
+    .name("payload_size_bytes")
+    .help("Packet payload size in bytes.").register()
