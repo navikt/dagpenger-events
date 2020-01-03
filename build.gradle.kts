@@ -46,6 +46,10 @@ dependencies {
     testImplementation(Junit5.kotlinRunner)
     testImplementation(Json.library)
     testRuntimeOnly(Junit5.engine)
+
+    implementation(Prometheus.common)
+    implementation(Prometheus.hotspot)
+    implementation(Micrometer.prometheusRegistry)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
