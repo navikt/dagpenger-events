@@ -24,6 +24,7 @@ class Packet constructor(jsonString: String = "{}") {
 
     private var problem: Problem? = null
     private var breadcrumbs: MutableList<Breadcrumb>
+    private val requiredKeys: MutableSet<String> = emptySet<String>().toMutableSet()
     private val json: MutableMap<String, Any?> =
         adapter.fromJson(jsonString)?.toMutableMap() ?: throw JsonDataException("Could not parse JSON: $jsonString")
 
@@ -59,12 +60,22 @@ class Packet constructor(jsonString: String = "{}") {
 
     private fun getValue(key: String): Any? = json[key]
 
+
+    fun addAccessor(requiredKey: String){
+        if(!requiredKeys.contains(requiredKey)) {
+            requiredKeys.add(requiredKey)
+        }
+    }
+
+    fun interestedIn(requiredKey: String) = addAccessor(requiredKey)
+
+
     fun putValue(key: String, thing: Any) {
         put(key, thing)
     }
 
     private fun put(key: String, value: Any) {
-        if (json.containsKey(key)) throw IllegalArgumentException("Cannot overwrite existing key: $key")
+        if (json.containsKey(key) && !requiredKeys.contains(key)) throw IllegalArgumentException("Manipulated keys must be declared as interesting. Cannot overwrite existing key: $key")
         json[key] = value
     }
 

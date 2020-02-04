@@ -343,11 +343,11 @@ class PacketTest {
         val packet = Packet(jsonString)
         val complex = ClassA(
             "id", listOf(
-            ClassB(
-                YearMonth.of(2019, 2),
-                listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
+                ClassB(
+                    YearMonth.of(2019, 2),
+                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
+                )
             )
-        )
         )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 
@@ -395,6 +395,15 @@ class PacketTest {
         packetPayloadByteSize.clear()
         val packet = Packet()
         packetPayloadByteSize.get().count shouldBe 1.0
+    }
+
+    @Test
+    fun `Should be able to mutate value if accessor is added for key`() {
+        val packet = Packet("""{ "mutable":"value" }""")
+        packet.interestedIn("mutable")
+        packet.putValue("mutable", "anothervalue")
+        val serializedPacket = Packet(packet.toJson()!!)
+        serializedPacket.getStringValue("mutable") shouldBe "anothervalue"
     }
 
     data class ClassA(
