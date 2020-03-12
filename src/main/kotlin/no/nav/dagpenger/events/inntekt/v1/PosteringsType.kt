@@ -5,7 +5,7 @@ enum class PosteringsType(val beskrivelse: String) {
     L_ANNET("Annen arbeidsinntekt"),
     L_ANNET_H("Hyre - Annet"),
     L_ANNET_IKKE_SKATTEPLIKTIG("Annen arbeidsinntekt - Ikke skattepliktig"),
-    L_ANNET_UTLANDET("Annen arbeidsinntekt - Utlandet" ),
+    L_ANNET_UTLANDET("Annen arbeidsinntekt - Utlandet"),
     L_ANNET_KONKURS("Annen arbeidsinntekt - Konkurs"),
     L_ANNET_T("Tiltak - Annet"),
     L_ARBEIDSOPPHOLD_KOST("Arbeidsopphold kost"),
