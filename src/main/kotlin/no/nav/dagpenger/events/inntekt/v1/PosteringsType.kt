@@ -36,6 +36,7 @@ enum class PosteringsType(val beskrivelse: String) {
     L_HELLIGDAGSTILLEGG_H("Hyre - Helligdagstillegg"),
     L_HELLIGDAGSTILLEGG_T("Tiltak - Helligdagstillegg"),
     L_HONORAR_AKKORD_PROSENT_PROVISJON("Honorar, akkord, prosent eller provisjonslønn"),
+    L_HONORAR_AKKORD_PROSENT_PROVISJON_H("Hyre - Honorar, akkord, prosent eller provisjonslønn"),
     L_HYRETILLEGG("Hyretillegg"),
     L_IKKE_SKATTEPLIKTIG_LØNN_FRA_UTENLANDSK_DIPLOM_KONSUL_STASJON("Lønn mv som ikke er skattepliktig i Norge fra utenlandsk diplomatisk eller konsulær stasjon"),
     L_INNBETALING_TIL_UTENLANDSK_PENSJONSORDNING("Innbetaling til utenlandsk pensjonsordning"),
