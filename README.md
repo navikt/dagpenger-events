@@ -1,5 +1,4 @@
-
-[![CircleCI](https://circleci.com/gh/navikt/dagpenger-events.svg?style=svg)](https://circleci.com/gh/navikt/dagpenger-events)
+![Build and deploy](https://github.com/navikt/dagpenger-events/workflows/Build%20and%20deploy/badge.svg)
 
 [![](https://jitpack.io/v/navikt/dagpenger-events.svg)](https://jitpack.io/#navikt/dagpenger-events)
 
