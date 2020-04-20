@@ -1,7 +1,7 @@
 package no.nav.dagpenger.events
 
 import com.squareup.moshi.JsonEncodingException
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import org.json.JSONObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
