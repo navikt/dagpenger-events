@@ -1,11 +1,11 @@
 package no.nav.dagpenger.events.inntekt.v1
 
+import java.math.BigDecimal
+import java.time.YearMonth
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.math.BigDecimal
-import java.time.YearMonth
 
 class InntektTest {
 

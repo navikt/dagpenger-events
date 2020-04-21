@@ -1,9 +1,9 @@
 package no.nav.dagpenger.events.inntekt.v1
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.YearMonth
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class KlassifisertInntektMånedTest {
 

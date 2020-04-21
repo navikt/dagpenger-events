@@ -2,11 +2,6 @@ package no.nav.dagpenger.events
 
 import com.squareup.moshi.JsonEncodingException
 import io.kotest.matchers.shouldBe
-import org.json.JSONObject
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
 import java.net.URI
 import java.time.LocalDate
@@ -14,6 +9,11 @@ import java.time.YearMonth
 import java.time.format.DateTimeParseException
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PacketTest {
     @Test
