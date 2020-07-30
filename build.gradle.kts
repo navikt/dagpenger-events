@@ -107,10 +107,10 @@ publishing {
 
 spotless {
     kotlin {
-        ktlint()
+        ktlint(Ktlint.version)
     }
     kotlinGradle {
         target("*.gradle.kts", "buildSrc/**/*.kt*")
-        ktlint()
+        ktlint(Ktlint.version)
     }
 }

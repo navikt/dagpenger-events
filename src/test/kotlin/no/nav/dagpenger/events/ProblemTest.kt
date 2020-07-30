@@ -1,9 +1,9 @@
 package no.nav.dagpenger.events
 
-import java.net.URI
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import java.net.URI
 
 internal class ProblemTest {
     @Test

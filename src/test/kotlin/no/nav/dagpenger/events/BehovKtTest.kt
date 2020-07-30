@@ -1,13 +1,13 @@
 package no.nav.dagpenger.events
 
-import java.util.UUID
-import kotlin.test.assertTrue
 import no.nav.dagpenger.events.avro.Annet
 import no.nav.dagpenger.events.avro.Behov
 import no.nav.dagpenger.events.avro.Ettersending
 import no.nav.dagpenger.events.avro.Søknad
 import no.nav.dagpenger.events.avro.Vedtakstype
 import org.junit.jupiter.api.Test
+import java.util.UUID
+import kotlin.test.assertTrue
 
 class BehovKtTest {
 

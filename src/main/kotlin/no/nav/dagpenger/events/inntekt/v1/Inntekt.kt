@@ -15,22 +15,22 @@ class Inntekt(
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                    emptyList()
-                )
+                        emptyList()
+                    )
             }.sortedBy { it.årMåned },
             (12L..23L).map { i ->
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                    emptyList()
-                )
+                        emptyList()
+                    )
             }.sortedBy { it.årMåned },
             (24L..35L).map { i ->
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                    emptyList()
-                )
+                        emptyList()
+                    )
             }.sortedBy { it.årMåned }
         )
     }

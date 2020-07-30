@@ -2,6 +2,11 @@ package no.nav.dagpenger.events
 
 import com.squareup.moshi.JsonEncodingException
 import io.kotest.matchers.shouldBe
+import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
 import java.net.URI
 import java.time.LocalDate
@@ -9,11 +14,6 @@ import java.time.YearMonth
 import java.time.format.DateTimeParseException
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-import org.json.JSONObject
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class PacketTest {
     @Test
@@ -23,35 +23,38 @@ class PacketTest {
 
     @Test
     fun `create packet with JSON`() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         assertEquals("value1", Packet(jsonString).getNullableStringValue("key1"))
     }
 
     @Test
     fun ` packet throws exception on invalid JSON`() {
-        val invalidJson = """
+        val invalidJson =
+            """
             {
                 "key1" "value1"
                 "key2": "value1",
             }
-        """.trimIndent()
+            """.trimIndent()
         assertThrows<JsonEncodingException> { Packet(invalidJson) }
     }
 
     @Test
     fun `packet keeps fields`() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": 1,
                 "key2": "value1",
                 "key3": true
             }
-        """.trimIndent()
+            """.trimIndent()
         val jsonObject = JSONObject(Packet(jsonString).toJson())
         assertEquals(1, jsonObject.getInt("key1"))
         assertEquals("value1", jsonObject.getString("key2"))
@@ -60,11 +63,12 @@ class PacketTest {
 
     @Test
     fun `packet gets system readcount`() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(JSONObject(Packet(jsonString).toJson()).has("system_read_count"))
         assertTrue(JSONObject(Packet(jsonString).toJson()).has("system_started"))
@@ -73,12 +77,13 @@ class PacketTest {
 
     @Test
     fun `packet increments system readcount`() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         val packet = Packet(jsonString)
 
@@ -88,12 +93,13 @@ class PacketTest {
     @Test
     fun `packet does not allow rewrite`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         assertThrows<IllegalArgumentException> { Packet(jsonString).putValue("key1", "awe") }
     }
@@ -101,12 +107,13 @@ class PacketTest {
     @Test
     fun `can write and get BigDecimal to packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("dec", BigDecimal(5))
@@ -126,13 +133,14 @@ class PacketTest {
     @Test
     fun `can write and get Number to packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1",
                 "key2": 5
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("int", 1)
@@ -158,12 +166,13 @@ class PacketTest {
     @Test
     fun `can write and get Boolean to packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("booleanValue1", true)
@@ -183,12 +192,13 @@ class PacketTest {
     @Test
     fun `can write and get Map values from Packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("map1", mapOf("key1" to "11222", "key2" to 124))
@@ -207,12 +217,13 @@ class PacketTest {
     @Test
     fun `can write and get LocalDate to packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("localdate", LocalDate.of(2019, 1, 15))
@@ -228,12 +239,13 @@ class PacketTest {
     @Test
     fun `can write and get YearMonth to packet`() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
 
         packet.putValue("yearmonth", YearMonth.of(2019, 2))
@@ -249,13 +261,14 @@ class PacketTest {
     @Test
     fun `hasField `() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1",
                 "anotherKey": "qwe"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
         assertTrue(packet.hasField("key1"))
         assertTrue(packet.hasField("anotherKey"))
@@ -266,14 +279,15 @@ class PacketTest {
     @Test
     fun `hasFields `() {
 
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 5,
                 "key1": "value1",
                 "anotherKey": "qwe",
                 "thirdKey": "qwe"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
         assertTrue(packet.hasFields("key1"))
         assertTrue(packet.hasFields("anotherKey"))
@@ -284,11 +298,12 @@ class PacketTest {
 
     @Test
     fun `Should be able to add problem `() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         val packet = Packet(jsonString)
 
@@ -298,11 +313,12 @@ class PacketTest {
 
     @Test
     fun `Should be able serialize problems to json `() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         val packet = Packet(jsonString)
 
@@ -321,11 +337,12 @@ class PacketTest {
 
     @Test
     fun `Should contain no problems `() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "key1": "value1"
             }
-        """.trimIndent()
+            """.trimIndent()
 
         val packet = Packet(jsonString)
         assertFalse(packet.hasProblem())
@@ -333,21 +350,23 @@ class PacketTest {
 
     @Test
     fun `can put complex object`() {
-        val jsonString = """
+        val jsonString =
+            """
             {
                 "system_read_count": 0,
                 "key1": "value1",
                 "anotherKey": "qwe"
             }
-        """.trimIndent()
+            """.trimIndent()
         val packet = Packet(jsonString)
         val complex = ClassA(
-            "id", listOf(
-            ClassB(
-                YearMonth.of(2019, 2),
-                listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
+            "id",
+            listOf(
+                ClassB(
+                    YearMonth.of(2019, 2),
+                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
+                )
             )
-        )
         )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 
