@@ -1,11 +1,11 @@
 package no.nav.dagpenger.events.inntekt.v1
 
-import java.math.BigDecimal
-import java.time.YearMonth
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.math.BigDecimal
+import java.time.YearMonth
 
 class InntektTest {
 
@@ -74,17 +74,21 @@ class InntektTest {
     @Test
     fun `inntektsPerioder splits up inntekt correctly`() {
 
-        val inntekts_up_to_march_2019 = Inntekt("id", inntektsListe = (0..36).toList().map {
-            KlassifisertInntektMåned(
-                sisteAvsluttendeKalenderMåned.minusMonths(it.toLong()),
-                listOf(
-                    KlassifisertInntekt(
-                        BigDecimal(1000),
-                        InntektKlasse.ARBEIDSINNTEKT
+        val inntekts_up_to_march_2019 = Inntekt(
+            "id",
+            inntektsListe = (0..36).toList().map {
+                KlassifisertInntektMåned(
+                    sisteAvsluttendeKalenderMåned.minusMonths(it.toLong()),
+                    listOf(
+                        KlassifisertInntekt(
+                            BigDecimal(1000),
+                            InntektKlasse.ARBEIDSINNTEKT
+                        )
                     )
                 )
-            )
-        }, sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned)
+            },
+            sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned
+        )
 
         val (first, second, third) = inntekts_up_to_march_2019.splitIntoInntektsPerioder()
 
@@ -108,12 +112,16 @@ class InntektTest {
     @Test
     fun `inntektsPerioder correctly splits up inntekt for only last year`() {
         val senesteMåned = YearMonth.of(2019, 3)
-        val onlyInntektLastYear = Inntekt("id", inntektsListe = (0..11).toList().map {
-            KlassifisertInntektMåned(
-                senesteMåned.minusMonths(it.toLong()),
-                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
-            )
-        }, sisteAvsluttendeKalenderMåned = senesteMåned)
+        val onlyInntektLastYear = Inntekt(
+            "id",
+            inntektsListe = (0..11).toList().map {
+                KlassifisertInntektMåned(
+                    senesteMåned.minusMonths(it.toLong()),
+                    listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+                )
+            },
+            sisteAvsluttendeKalenderMåned = senesteMåned
+        )
         val (first, second, third) = onlyInntektLastYear.splitIntoInntektsPerioder()
 
         assertEquals(12, first.size)
@@ -140,12 +148,16 @@ class InntektTest {
     @Test
     fun `inntektsPerioder correctly splits up inntekt missing earliest year`() {
         val senesteMåned = YearMonth.of(2019, 3)
-        val noInntektThirdPeriod = Inntekt("id", inntektsListe = (0..23).toList().map {
-            KlassifisertInntektMåned(
-                senesteMåned.minusMonths(it.toLong()),
-                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
-            )
-        }, sisteAvsluttendeKalenderMåned = senesteMåned)
+        val noInntektThirdPeriod = Inntekt(
+            "id",
+            inntektsListe = (0..23).toList().map {
+                KlassifisertInntektMåned(
+                    senesteMåned.minusMonths(it.toLong()),
+                    listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+                )
+            },
+            sisteAvsluttendeKalenderMåned = senesteMåned
+        )
 
         val (first, second, third) = noInntektThirdPeriod.splitIntoInntektsPerioder()
 
@@ -172,12 +184,16 @@ class InntektTest {
 
     @Test
     fun `inntektsPerioder correctly splits up noncontinous inntekt`() {
-        val nonContinous = Inntekt("id", inntektsListe = ((0..5).toList() + (10..24).toList()).map {
-            KlassifisertInntektMåned(
-                sisteAvsluttendeKalenderMåned.minusMonths(it.toLong()),
-                listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
-            )
-        }, sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned)
+        val nonContinous = Inntekt(
+            "id",
+            inntektsListe = ((0..5).toList() + (10..24).toList()).map {
+                KlassifisertInntektMåned(
+                    sisteAvsluttendeKalenderMåned.minusMonths(it.toLong()),
+                    listOf(KlassifisertInntekt(BigDecimal(1000), InntektKlasse.ARBEIDSINNTEKT))
+                )
+            },
+            sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned
+        )
 
         val (first, second, third) = nonContinous.splitIntoInntektsPerioder()
 
