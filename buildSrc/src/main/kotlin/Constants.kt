@@ -121,7 +121,7 @@ object Konfig {
 }
 
 object Kotlin {
-    const val version = "1.3.72"
+    const val version = "1.4.0"
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
 
     object Coroutines {
@@ -136,7 +136,7 @@ object Kotlin {
 }
 
 object KoTest {
-    const val version = "4.0.3"
+    const val version = "4.2.0.RC2"
 
     // for kotest framework
     const val runner = "io.kotest:kotest-runner-junit5-jvm:$version"

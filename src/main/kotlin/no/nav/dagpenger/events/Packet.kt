@@ -134,13 +134,13 @@ class Packet constructor(jsonString: String = "{}") {
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getMapValue(key: String): Map<String, Any> {
-        return getValue(key).takeIf { it is Map<*, *> }.let {
+        return getValue(key).takeIf { it is Map<*, *> }?.let {
             try {
                 it as Map<String, Any>
             } catch (e: TypeCastException) {
                 throw IllegalArgumentException("Not a map value for key=$key")
             }
-        }
+        } ?: throw IllegalArgumentException("Not a map value for key=$key")
     }
 
     fun getCorrelationId(): String = getStringValue(CORRELATION_ID)
