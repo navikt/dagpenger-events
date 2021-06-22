@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("java-library")
     kotlin("jvm") version Kotlin.version
-    id("com.commercehub.gradle.plugin.avro") version "0.16.0"
     id(Spotless.spotless) version Spotless.version
     id("maven-publish")
 }
@@ -30,8 +29,6 @@ java {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
-
-    implementation(Avro.avro)
 
     implementation(Ulid.ulid)
 
@@ -77,7 +74,7 @@ publishing {
 
             pom {
                 name.set("dagpenger-events")
-                description.set("Avro schemas for dagpenger events")
+                description.set("Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt] og 'packet'. Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers]. Brukes stort sett bare av [dp-regel*] riggen. ")
                 url.set("https://github.com/navikt/dagpenger-events")
                 withXml {
                     asNode().appendNode("packaging", "jar")
