@@ -103,7 +103,7 @@ class Packet constructor(jsonString: String = "{}") {
 
     fun getNullableBoolean(key: String): Boolean? {
         val v: Any? = getValue(key)
-        return when (v.toString().toLowerCase()) {
+        return when (v.toString().lowercase()) {
             "null" -> null
             "true" -> true
             "false" -> false
