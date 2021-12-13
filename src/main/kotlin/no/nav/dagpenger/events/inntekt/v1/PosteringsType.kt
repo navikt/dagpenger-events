@@ -48,6 +48,7 @@ enum class PosteringsType(val beskrivelse: String) {
     L_LØNN_FOR_BARNEPASS_I_BARNETS_HJEM("Lønn og godtgjørelse til dagmamma eller praktikant som passer barn i barnets hjem"),
     L_LØNN_TIL_PRIVATPERSONER_FOR_ARBEID_I_HJEMMET("Lønn og godtgjørelse til privatpersoner for arbeidsoppdrag i oppdragsgivers hjem"),
     L_LØNN_TIL_VERGE_FRA_FYLKESMANNEN("Lønn til verge fra Fylkesmannen"),
+    L_LØNN_TIL_VERGE_FRA_STATSFORVALTEREN("Lønn til verge fra Statsforvalteren"),
     L_LØNN_UTBETALT_AV_VELDEDIG_ELLER_ALLMENNYTTIG_INSTITUSJON_ELLER_ORGANISASJON("Lønn og godtgjørelse utbetalt av veldedig eller allmennyttig institusjon eller organisasjon"),
     L_LOSJI("Losji"),
     L_OPSJONER("Opsjoner"),
