@@ -126,7 +126,7 @@ object Kotlin {
     }
 
     object Logging {
-        const val version = "2.2.21"
+        const val version = "2.1.21"
         const val kotlinLogging = "io.github.microutils:kotlin-logging:$version"
     }
 }
