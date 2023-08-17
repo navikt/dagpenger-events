@@ -1,4 +1,4 @@
-rootProject.name = "events"
+rootProject.name = "dagpenger-events"
 
 pluginManagement {
     repositories {
