@@ -92,7 +92,6 @@ class PacketTest {
 
     @Test
     fun `packet does not allow rewrite`() {
-
         val jsonString =
             """
             {
@@ -106,7 +105,6 @@ class PacketTest {
 
     @Test
     fun `can write and get BigDecimal to packet`() {
-
         val jsonString =
             """
             {
@@ -132,7 +130,6 @@ class PacketTest {
 
     @Test
     fun `can write and get Number to packet`() {
-
         val jsonString =
             """
             {
@@ -165,7 +162,6 @@ class PacketTest {
 
     @Test
     fun `can write and get Boolean to packet`() {
-
         val jsonString =
             """
             {
@@ -191,7 +187,6 @@ class PacketTest {
 
     @Test
     fun `can write and get Map values from Packet`() {
-
         val jsonString =
             """
             {
@@ -216,7 +211,6 @@ class PacketTest {
 
     @Test
     fun `can write and get LocalDate to packet`() {
-
         val jsonString =
             """
             {
@@ -238,7 +232,6 @@ class PacketTest {
 
     @Test
     fun `can write and get YearMonth to packet`() {
-
         val jsonString =
             """
             {
@@ -260,7 +253,6 @@ class PacketTest {
 
     @Test
     fun `hasField `() {
-
         val jsonString =
             """
             {
@@ -278,7 +270,6 @@ class PacketTest {
 
     @Test
     fun `hasFields `() {
-
         val jsonString =
             """
             {
@@ -327,7 +318,7 @@ class PacketTest {
             title = "A problem",
             status = 404,
             detail = "An detailed error message",
-            instance = URI.create("urn:error:404")
+            instance = URI.create("urn:error:404"),
         )
         packet.addProblem(problem)
         val serializedPacket = Packet(packet.toJson()!!)
@@ -364,9 +355,9 @@ class PacketTest {
             listOf(
                 ClassB(
                     YearMonth.of(2019, 2),
-                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA))
-                )
-            )
+                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA)),
+                ),
+            ),
         )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 
@@ -380,7 +371,7 @@ class PacketTest {
         assertThrows<IllegalArgumentException> {
             packet.getObjectValue("notExisting") { string ->
                 adapter.fromJsonValue(
-                    string
+                    string,
                 ) ?: throw java.lang.IllegalArgumentException()
             }
         }
@@ -418,21 +409,21 @@ class PacketTest {
 
     data class ClassA(
         val id: String,
-        val list: List<ClassB>
+        val list: List<ClassB>,
     )
 
     data class ClassB(
         val yearMonth: YearMonth,
-        val list: List<ClassC>
+        val list: List<ClassC>,
     )
 
     data class ClassC(
         val bigDecimal: BigDecimal,
-        val enums: AnEnum
+        val enums: AnEnum,
     )
 
     enum class AnEnum {
         AAA,
-        BBB
+        BBB,
     }
 }

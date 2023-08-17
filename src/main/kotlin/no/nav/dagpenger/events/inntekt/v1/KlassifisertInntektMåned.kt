@@ -6,7 +6,7 @@ import java.time.YearMonth
 data class KlassifisertInntektMåned(
     val årMåned: YearMonth,
     val klassifiserteInntekter: List<KlassifisertInntekt>,
-    val harAvvik: Boolean? = null
+    val harAvvik: Boolean? = null,
 )
 
 fun Collection<KlassifisertInntektMåned>.sumInntekt(inntektsKlasserToSum: List<InntektKlasse>) =

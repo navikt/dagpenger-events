@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("java-library")
     kotlin("jvm") version Kotlin.version
-    id(Spotless.spotless) version Spotless.version
+    id("com.diffplug.spotless") version "6.19.0"
     id("maven-publish")
 }
 
@@ -111,11 +111,11 @@ publishing {
 
 spotless {
     kotlin {
-        ktlint(Ktlint.version)
+        ktlint()
     }
     kotlinGradle {
         target("*.gradle.kts", "buildSrc/**/*.kt*")
-        ktlint(Ktlint.version)
+        ktlint()
     }
 
     // Workaround for <https://github.com/diffplug/spotless/issues/1644>

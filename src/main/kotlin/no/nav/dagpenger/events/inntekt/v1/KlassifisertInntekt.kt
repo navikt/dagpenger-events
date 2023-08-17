@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 data class KlassifisertInntekt(
     val beløp: BigDecimal,
-    val inntektKlasse: InntektKlasse
+    val inntektKlasse: InntektKlasse,
 )
 
 enum class InntektKlasse {
@@ -14,5 +14,5 @@ enum class InntektKlasse {
     SYKEPENGER_FANGST_FISKE,
     FANGST_FISKE,
     SYKEPENGER,
-    TILTAKSLØNN
+    TILTAKSLØNN,
 }

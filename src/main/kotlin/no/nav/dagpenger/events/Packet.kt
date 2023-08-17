@@ -49,7 +49,7 @@ class Packet constructor(jsonString: String = "{}") {
         System.getenv("NAIS_APP_NAME")?.let {
             val breadcrumb = Breadcrumb(
                 it,
-                LocalDateTime.now()
+                LocalDateTime.now(),
             )
             breadcrumbs.add(breadcrumb)
         }

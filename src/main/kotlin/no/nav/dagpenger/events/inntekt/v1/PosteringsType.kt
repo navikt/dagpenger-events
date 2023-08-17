@@ -91,5 +91,5 @@ enum class PosteringsType(val beskrivelse: String) {
     Y_FORELDREPENGER("Foreldrepenger fra folketrygden"),
     Y_SVANGERSKAPSPENGER("Svangerskapspenger"),
     Y_SYKEPENGER("Sykepenger fra folketrygden"),
-    Y_SYKEPENGER_TIL_FISKER_SOM_BARE_HAR_HYRE("Sykepenger til fisker som bare har hyre")
+    Y_SYKEPENGER_TIL_FISKER_SOM_BARE_HAR_HYRE("Sykepenger til fisker som bare har hyre"),
 }

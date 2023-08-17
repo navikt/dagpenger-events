@@ -7,7 +7,7 @@ data class Problem(
     val title: String,
     val status: Int? = 500,
     val detail: String? = null,
-    val instance: URI = URI.create("about:blank")
+    val instance: URI = URI.create("about:blank"),
 ) {
     companion object {
         private val adapter = moshiInstance.adapter<Problem>(Problem::class.java)
@@ -18,7 +18,7 @@ data class Problem(
                 json["title"] as String,
                 json["status"]?.toString()?.toDouble()?.toInt(),
                 json["detail"] as String?,
-                URI.create(json["instance"] as String)
+                URI.create(json["instance"] as String),
             )
         }
     }

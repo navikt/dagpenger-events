@@ -6,7 +6,7 @@ class Inntekt(
     val inntektsId: String,
     val inntektsListe: List<KlassifisertInntektMåned>,
     val manueltRedigert: Boolean? = false,
-    val sisteAvsluttendeKalenderMåned: YearMonth
+    val sisteAvsluttendeKalenderMåned: YearMonth,
 ) {
 
     fun splitIntoInntektsPerioder(): InntektsPerioder {
@@ -15,23 +15,23 @@ class Inntekt(
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                        emptyList()
+                        emptyList(),
                     )
             }.sortedBy { it.årMåned },
             (12L..23L).map { i ->
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                        emptyList()
+                        emptyList(),
                     )
             }.sortedBy { it.årMåned },
             (24L..35L).map { i ->
                 inntektsListe.find { it.årMåned == sisteAvsluttendeKalenderMåned.minusMonths(i) }
                     ?: KlassifisertInntektMåned(
                         sisteAvsluttendeKalenderMåned.minusMonths(i),
-                        emptyList()
+                        emptyList(),
                     )
-            }.sortedBy { it.årMåned }
+            }.sortedBy { it.årMåned },
         )
     }
 
@@ -40,7 +40,7 @@ class Inntekt(
         return Inntekt(
             inntektsId,
             inntektsListe.filter { it.årMåned !in from..to },
-            sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned
+            sisteAvsluttendeKalenderMåned = sisteAvsluttendeKalenderMåned,
         )
     }
 }

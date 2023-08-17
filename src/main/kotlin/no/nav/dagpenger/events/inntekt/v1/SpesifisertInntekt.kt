@@ -13,7 +13,7 @@ data class SpesifisertInntekt(
     val sisteAvsluttendeKalenderMåned: YearMonth,
     val ident: Aktør,
     val manueltRedigert: Boolean,
-    val timestamp: LocalDateTime
+    val timestamp: LocalDateTime,
 )
 
 data class Avvik(
@@ -21,7 +21,7 @@ data class Avvik(
     val opplysningspliktig: Aktør,
     val virksomhet: Aktør? = null,
     val avvikPeriode: YearMonth,
-    val tekst: String
+    val tekst: String,
 )
 
 data class Postering(
@@ -43,7 +43,7 @@ data class Postering(
     val inngårIGrunnlagForTrekk: Boolean? = null,
     val utløserArbeidsgiveravgift: Boolean? = null,
     val informasjonsstatus: String? = null,
-    val posteringsType: PosteringsType
+    val posteringsType: PosteringsType,
 )
 
 data class InntektId(val id: String) {
@@ -58,18 +58,18 @@ data class InntektId(val id: String) {
 
 data class Periode(
     val startDato: LocalDate,
-    val sluttDato: LocalDate
+    val sluttDato: LocalDate,
 )
 
 data class Aktør(
     val aktørType: AktørType,
-    val identifikator: String
+    val identifikator: String,
 )
 
 enum class AktørType {
     AKTOER_ID,
     NATURLIG_IDENT,
-    ORGANISASJON
+    ORGANISASJON,
 }
 
 class IllegalInntektIdException(override val message: String, override val cause: Throwable?) : java.lang.RuntimeException(message, cause)
