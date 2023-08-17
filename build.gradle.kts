@@ -118,7 +118,6 @@ spotless {
         ktlint(Ktlint.version)
     }
 
-
     // Workaround for <https://github.com/diffplug/spotless/issues/1644>
     // using idea found at
     // <https://github.com/diffplug/spotless/issues/1527#issuecomment-1409142798>.
