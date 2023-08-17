@@ -1,6 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-library")
@@ -10,20 +9,14 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven("https://packages.confluent.io/maven/")
-    maven("https://jitpack.io")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 group = "com.github.navikt"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+kotlin {
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -66,9 +59,22 @@ tasks.withType<Test> {
     }
 }
 
+val githubUser: String? by project
+val githubPassword: String? by project
+
 publishing {
+
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/navikt/dagpenger-events")
+            credentials {
+                username = githubUser
+                password = githubPassword
+            }
+        }
+    }
     publications {
-        create("mavenJava", MavenPublication::class.java) {
+        create<MavenPublication>("mavenJava") {
             from(components["java"])
             artifact(sourcesJar.get())
 
