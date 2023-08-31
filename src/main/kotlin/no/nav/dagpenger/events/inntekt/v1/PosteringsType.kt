@@ -61,6 +61,7 @@ enum class PosteringsType(val beskrivelse: String) {
     L_RENTEFORDEL_LÅN("Rentefordel lån"),
     L_SKATTEPLIKTIG_DEL_FORSIKRINGER("Skattepliktig del av visse typer forsikringer"),
     L_SKATTEPLIKTIG_PERSONALRABATT("Skattepliktig personalrabatt"),
+    L_SKATTEPLIKTIG_GODTGJOERELSE_SAERAVTALE_UTLAND("Skattepliktig godtgjørelse særavtale utland"),
     L_SLUTTVEDERLAG(" Sluttvederlag"),
     L_SLUTTVEDERLAG_H("Hyre - Sluttvederlag"),
     L_SLUTTVEDERLAG_T("Tiltak - Sluttvederlag"),
