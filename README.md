@@ -4,7 +4,8 @@
 
 # Event 
 
-Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt](https://github.com/navikt/dp-inntekt) og 'packet'. Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers](https://github.com/navikt/rapids-and-rivers). Brukes stort sett bare av [dp-regel*](https://github.com/navikt/dp-regel-api) riggen. 
+Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt](https://github.com/navikt/dp-inntekt) og 'packet'.
+Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers](https://github.com/navikt/rapids-and-rivers). Brukes stort sett bare av [dp-regel*](https://github.com/navikt/dp-regel-api) riggen. 
 
 
 
