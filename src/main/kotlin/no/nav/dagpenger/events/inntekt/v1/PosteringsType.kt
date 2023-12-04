@@ -90,7 +90,7 @@ enum class PosteringsType(val beskrivelse: String) {
     Y_DAGPENGER_TIL_FISKER_SOM_BARE_HAR_HYRE("Dagpenger til fisker som bare har hyre"),
     Y_DAGPENGER_TIL_FISKER_SOM_BARE_HAR_HYRE_FERIETILLEGG("Ferietillegg for dagpenger til fisker som bare har hyre"),
     Y_DAGPENGER_VED_ARBEIDSLØSHET("Dagpenger ved arbeidsløshet"),
-    Y_DAGPENGER_FERIETILLEGG("Ferietillegg for dagpenger ved arbeidsløshet"),
+    Y_DAGPENGER_VED_ARBEIDSLØSHET_FERIETILLEGG("Ferietillegg for dagpenger ved arbeidsløshet"),
     Y_FORELDREPENGER("Foreldrepenger fra folketrygden"),
     Y_FORELDREPENGER_FERIEPENGER("Feriepenger av foreldrepenger fra folketrygden"),
     Y_SVANGERSKAPSPENGER("Svangerskapspenger"),
