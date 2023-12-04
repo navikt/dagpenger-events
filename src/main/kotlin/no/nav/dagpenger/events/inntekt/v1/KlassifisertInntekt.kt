@@ -15,4 +15,7 @@ enum class InntektKlasse {
     FANGST_FISKE,
     SYKEPENGER,
     TILTAKSLØNN,
+    PLEIEPENGER,
+    OMSORGSPENGER,
+    OPPLÆRINGSPENGER,
 }
