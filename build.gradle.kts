@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("java-library")
     kotlin("jvm") version Kotlin.version
-    id("com.diffplug.spotless") version "6.21.0"
+    id("com.diffplug.spotless") version "6.24.0"
     id("maven-publish")
 }
 
