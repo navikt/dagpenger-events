@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-library")
-    kotlin("jvm") version Kotlin.version
+    kotlin("jvm") version "1.9.24"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id("maven-publish")
 }
@@ -21,24 +21,17 @@ kotlin {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    implementation(kotlin("reflect"))
+    implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.3.0")
+    implementation("io.prometheus:simpleclient_common:0.16.0")
 
-    implementation(Ulid.ulid)
+    val moshiVersion = "1.15.1"
+    implementation("com.squareup.moshi:moshi:$moshiVersion")
+    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
 
-    implementation(Moshi.moshi)
-    implementation(Moshi.moshiAdapters)
-    implementation(Moshi.moshiKotlin) {
-        exclude(module = "kotlin-stdlib") // Brings in Kotlin 1.2.71
-        exclude(module = "kotlin-reflect") // Brings in Kotlin 1.2.71 - https://github.com/square/moshi/pull/825 fixes this when released
-    }
-    testImplementation(kotlin("test-junit5"))
-    testImplementation(Junit5.api)
-    testImplementation(KoTest.runner)
-    testImplementation(Json.library)
-    testRuntimeOnly(Junit5.engine)
-
-    implementation(Prometheus.common)
+    testImplementation(kotlin("test"))
+    testImplementation("org.json:json:20231013")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -60,7 +53,6 @@ val githubUser: String? by project
 val githubPassword: String? by project
 
 publishing {
-
     repositories {
         maven {
             url = uri("https://maven.pkg.github.com/navikt/dagpenger-events")
