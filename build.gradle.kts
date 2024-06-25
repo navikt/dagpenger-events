@@ -17,7 +17,7 @@ repositories {
 group = "com.github.navikt"
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 dependencies {
@@ -81,7 +81,9 @@ publishing {
 
             pom {
                 name.set("dagpenger-events")
-                description.set("Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt] og 'packet'. Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers]. Brukes stort sett bare av [dp-regel*] riggen. ")
+                description.set(
+                    "Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt] og 'packet'. Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers]. Brukes stort sett bare av [dp-regel*] riggen. ",
+                )
                 url.set("https://github.com/navikt/dagpenger-events")
                 withXml {
                     asNode().appendNode("packaging", "jar")

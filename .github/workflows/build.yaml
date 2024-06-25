@@ -13,23 +13,22 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
-      - uses: gradle/wrapper-validation-action@v3.4.2
-      - uses: gradle/gradle-build-action@v3.4.2
+          java-version: 21
+      - uses: gradle/actions/wrapper-validation@v3
+      - uses: gradle/actions/setup-gradle@v3
         env:
           # Eksluder test dependencies
           DEPENDENCY_GRAPH_INCLUDE_CONFIGURATIONS: compileClasspath|runtimeClasspath
         with:
           gradle-version: wrapper
           dependency-graph: generate-and-submit
-          arguments: --configuration-cache test
-
+      - run: ./gradlew --configuration-cache test
 
   release:
     name: Create Release
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'ci skip')
+    if: github.ref == 'refs/heads/master'
     permissions:
       contents: write
     steps:
