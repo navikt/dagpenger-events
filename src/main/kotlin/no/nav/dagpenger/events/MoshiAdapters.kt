@@ -11,14 +11,15 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-val moshiInstance: Moshi = Moshi.Builder()
-    .add(YearMonthJsonAdapter())
-    .add(LocalDateJsonAdapter())
-    .add(LocalDateTimeJsonAdapter())
-    .add(KotlinJsonAdapterFactory())
-    .add(BigDecimalJsonAdapter())
-    .add(URIJsonAdapter())
-    .build()!!
+val moshiInstance: Moshi =
+    Moshi.Builder()
+        .add(YearMonthJsonAdapter())
+        .add(LocalDateJsonAdapter())
+        .add(LocalDateTimeJsonAdapter())
+        .add(KotlinJsonAdapterFactory())
+        .add(BigDecimalJsonAdapter())
+        .add(URIJsonAdapter())
+        .build()!!
 
 class YearMonthJsonAdapter {
     @ToJson
@@ -45,7 +46,6 @@ class LocalDateJsonAdapter {
 }
 
 class BigDecimalJsonAdapter {
-
     @ToJson
     fun toJson(bigDecimal: BigDecimal): String {
         return bigDecimal.toString()

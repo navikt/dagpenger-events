@@ -1,11 +1,11 @@
-import com.diffplug.spotless.LineEnding
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-library")
     kotlin("jvm") version Kotlin.version
-    id("com.diffplug.spotless") version "6.21.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id("maven-publish")
 }
 
@@ -46,10 +46,6 @@ val sourcesJar by tasks.registering(Jar::class) {
     from(sourceSets["main"].allSource)
 }
 
-tasks.named("compileKotlin") {
-    dependsOn("spotlessCheck")
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {
@@ -82,7 +78,9 @@ publishing {
             pom {
                 name.set("dagpenger-events")
                 description.set(
-                    "Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt] og 'packet'. Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers]. Brukes stort sett bare av [dp-regel*] riggen. ",
+                    """Holder definisjonen av dagpenger inntekt (brukt av [dp-inntekt] og 'packet'. 
+                        |Packet er dagpengers gamle svar på JsonMessage på [Rapid and rivers]. Brukes stort sett bare av [dp-regel*] riggen. 
+                    """.trimMargin(),
                 )
                 url.set("https://github.com/navikt/dagpenger-events")
                 withXml {
@@ -111,17 +109,6 @@ publishing {
     }
 }
 
-spotless {
-    kotlin {
-        ktlint()
-    }
-    kotlinGradle {
-        target("*.gradle.kts", "buildSrc/**/*.kt*")
-        ktlint()
-    }
-
-    // Workaround for <https://github.com/diffplug/spotless/issues/1644>
-    // using idea found at
-    // <https://github.com/diffplug/spotless/issues/1527#issuecomment-1409142798>.
-    lineEndings = LineEnding.PLATFORM_NATIVE // or any other except GIT_ATTRIBUTES
+tasks.withType<KotlinCompile>().configureEach {
+    dependsOn("ktlintFormat")
 }

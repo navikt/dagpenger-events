@@ -313,13 +313,14 @@ class PacketTest {
 
         val packet = Packet(jsonString)
 
-        val problem = Problem(
-            type = URI.create("urn:error"),
-            title = "A problem",
-            status = 404,
-            detail = "An detailed error message",
-            instance = URI.create("urn:error:404"),
-        )
+        val problem =
+            Problem(
+                type = URI.create("urn:error"),
+                title = "A problem",
+                status = 404,
+                detail = "An detailed error message",
+                instance = URI.create("urn:error:404"),
+            )
         packet.addProblem(problem)
         val serializedPacket = Packet(packet.toJson()!!)
         assertTrue(serializedPacket.hasProblem())
@@ -350,15 +351,16 @@ class PacketTest {
             }
             """.trimIndent()
         val packet = Packet(jsonString)
-        val complex = ClassA(
-            "id",
-            listOf(
-                ClassB(
-                    YearMonth.of(2019, 2),
-                    listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA)),
+        val complex =
+            ClassA(
+                "id",
+                listOf(
+                    ClassB(
+                        YearMonth.of(2019, 2),
+                        listOf(ClassC(BigDecimal.ZERO, AnEnum.BBB), ClassC(BigDecimal.TEN, AnEnum.AAA)),
+                    ),
                 ),
-            ),
-        )
+            )
         val adapter = moshiInstance.adapter<ClassA>(ClassA::class.java)
 
         packet.putValue("complex", adapter.toJsonValue(complex)!!)
@@ -379,10 +381,11 @@ class PacketTest {
 
     @Test
     fun `toString should hide non system Packet values`() {
-        val packetString = Packet().apply {
-            putValue(Packet.PROBLEM, "problemValue")
-            putValue("secret", "secretValue")
-        }.toString()
+        val packetString =
+            Packet().apply {
+                putValue(Packet.PROBLEM, "problemValue")
+                putValue("secret", "secretValue")
+            }.toString()
 
         assertFalse(packetString.contains("secretValue"))
         assertFalse(packetString.contains("problemValue"))

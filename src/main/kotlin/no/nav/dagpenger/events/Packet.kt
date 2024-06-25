@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 
 class Packet constructor(jsonString: String = "{}") {
-
     companion object {
         internal const val READ_COUNT = "system_read_count"
         internal const val CORRELATION_ID = "system_correlation_id"
@@ -47,10 +46,11 @@ class Packet constructor(jsonString: String = "{}") {
         breadcrumbs = breadcrumbsAdapter.fromJsonValue(json[BREADCRUMBS]) ?: mutableListOf()
 
         System.getenv("NAIS_APP_NAME")?.let {
-            val breadcrumb = Breadcrumb(
-                it,
-                LocalDateTime.now(),
-            )
+            val breadcrumb =
+                Breadcrumb(
+                    it,
+                    LocalDateTime.now(),
+                )
             breadcrumbs.add(breadcrumb)
         }
 
@@ -59,28 +59,36 @@ class Packet constructor(jsonString: String = "{}") {
 
     private fun getValue(key: String): Any? = json[key]
 
-    fun putValue(key: String, thing: Any) {
+    fun putValue(
+        key: String,
+        thing: Any,
+    ) {
         put(key, thing)
     }
 
-    private fun put(key: String, value: Any) {
+    private fun put(
+        key: String,
+        value: Any,
+    ) {
         if (json.containsKey(key)) throw IllegalArgumentException("Cannot overwrite existing key: $key")
         json[key] = value
     }
 
-    private fun mergeMembersJsonMap() = json.toMutableMap().apply {
-        this[PROBLEM] = problem
-        this[BREADCRUMBS] = breadcrumbs
-    }
+    private fun mergeMembersJsonMap() =
+        json.toMutableMap().apply {
+            this[PROBLEM] = problem
+            this[BREADCRUMBS] = breadcrumbs
+        }
 
     fun toJson(): String? = mergeMembersJsonMap().run(adapter::toJson)
 
-    override fun toString(): String = mergeMembersJsonMap().mapValues { entry ->
-        when {
-            entry.key.startsWith("system") -> entry.value
-            else -> "<REDACTED>"
-        }
-    }.run(adapter::toJson)
+    override fun toString(): String =
+        mergeMembersJsonMap().mapValues { entry ->
+            when {
+                entry.key.startsWith("system") -> entry.value
+                else -> "<REDACTED>"
+            }
+        }.run(adapter::toJson)
 
     fun hasField(key: String): Boolean = json.containsKey(key)
 
@@ -98,8 +106,10 @@ class Packet constructor(jsonString: String = "{}") {
 
     fun getNullableYearMonth(key: String): YearMonth? = getValue(key)?.let { YearMonth.parse(it.toString()) }
 
-    fun <T> getNullableObjectValue(key: String, decode: (Any) -> T): T? =
-        getValue(key)?.let(decode)
+    fun <T> getNullableObjectValue(
+        key: String,
+        decode: (Any) -> T,
+    ): T? = getValue(key)?.let(decode)
 
     fun getNullableBoolean(key: String): Boolean? {
         val v: Any? = getValue(key)
@@ -111,25 +121,22 @@ class Packet constructor(jsonString: String = "{}") {
         }
     }
 
-    fun getBigDecimalValue(key: String) =
-        getNullableBigDecimalValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getBigDecimalValue(key: String) = getNullableBigDecimalValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getIntValue(key: String) = getNullableIntValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getLongValue(key: String) =
-        getNullableLongValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getLongValue(key: String) = getNullableLongValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getStringValue(key: String) =
-        getNullableStringValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getStringValue(key: String) = getNullableStringValue(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getLocalDate(key: String) =
-        getNullableLocalDate(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getLocalDate(key: String) = getNullableLocalDate(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun getYearMonth(key: String) =
-        getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun getYearMonth(key: String) = getNullableYearMonth(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
-    fun <T : Any> getObjectValue(key: String, decode: (Any) -> T): T =
-        getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
+    fun <T : Any> getObjectValue(
+        key: String,
+        decode: (Any) -> T,
+    ): T = getNullableObjectValue(key, decode) ?: throw IllegalArgumentException("Null value for key=$key")
 
     fun getBoolean(key: String) = getNullableBoolean(key) ?: throw IllegalArgumentException("Null value for key=$key")
 
