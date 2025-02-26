@@ -24,7 +24,7 @@ dependencies {
     implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.3.0")
     implementation("io.prometheus:simpleclient_common:0.16.0")
 
-    val moshiVersion = "1.15.1"
+    val moshiVersion = "1.15.2"
     implementation("com.squareup.moshi:moshi:$moshiVersion")
     implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
