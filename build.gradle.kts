@@ -31,7 +31,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("org.json:json:20250107")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:6.0.5")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
