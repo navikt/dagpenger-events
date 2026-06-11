@@ -30,7 +30,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.json:json:20251224")
+    testImplementation("org.json:json:20260522")
     testImplementation("io.kotest:kotest-assertions-core-jvm:6.1.11")
 }
 
